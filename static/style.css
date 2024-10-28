@@ -1,0 +1,31 @@
+body{
+    background-color: #EFF2F9;
+}
+
+#profileHeader{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#profileName{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+#profileImage{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+
+#profileNameText{
+    margin-left: 20px;
+}
+
+#profileAddress{
+    margin-top: 20px;
+}
+
