@@ -16,13 +16,22 @@ body{
 }
 
 #profileImage{
-    width: 100px;
-    height: 100px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
+    border-color: #CD5459;
+    border: 2px solid;
 }
 
 #profileNameText{
+    display:flex;
+    flex-direction: column;
     margin-left: 20px;
+}
+
+#profileNameText span{
+    font-size: 12px;
+    color: #CD5459;
 }
 
 #profileAddress{
