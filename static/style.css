@@ -106,32 +106,20 @@ footer{
 }
 
 #navPanel{
-    /* margin-top: 30px; */
-    /* height: 100%; */
     gap:30px;
-    /* border-left: 1px solid #ccc; */
-    /* display: flex; */
-    /* flex-direction: column; */
-    /* justify-content: center; */
-    /* align-items: top; */
-    /* width: 100%; */
-    /* position: relative; */
-    /* display: flex; */
+    display: flex;
     flex-direction: row;
-    /* flex-wrap: wrap; */
-    /* border-radius: 0.5rem; */
-    /* background-color: #EEE; */
-    /* box-sizing: border-box; */
-    /* box-shadow: 0 0 0px 1px rgba(0, 0, 0, 0.06); */
-    padding: 0.25rem;
+    /* padding: 0.25rem; */
     font-size: 14px;
+    background-color: #fff;
+    border-radius: 0.5rem;
+    
 }
 
 .radio {
+    flex-direction: row;
     flex: 1 1 auto;
     text-align: center;
-    margin: 30px;
-    margin-right: 0px;
 }
 
 .radio input {
@@ -146,12 +134,12 @@ footer{
     justify-content: center;
     border-radius: 0.5rem;
     border: none;
-    padding: .5rem 0;
+    padding: .5rem;
     color: rgba(51, 65, 85, 1);
     transition: all .15s ease-in-out;
 }
 
 .radio input:checked + .name {
-    background-color: #fff;
+    background-color: #ababab;
     font-weight: 600;
 }
