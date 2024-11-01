@@ -50,46 +50,6 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-    let deferredPrompt; // Store the event
-
-    // Listen for the 'beforeinstallprompt' event
-    window.addEventListener("beforeinstallprompt", (event) => {
-        event.preventDefault(); // Prevent the default mini-infobar
-        deferredPrompt = event; // Save the event for later use
-
-        // Optionally, you can display a custom message or icon indicating that the app can be installed.
-    });
-
-    // Example: Trigger the prompt when the user clicks on a specific element (like a settings icon)
-    document.getElementById("homeMain").addEventListener('click', () => {
-        if (deferredPrompt) {
-            deferredPrompt.prompt(); // Show the install prompt
-
-            // Handle the user's response to the prompt
-            deferredPrompt.userChoice.then((choiceResult) => {
-                if (choiceResult.outcome === "accepted") {
-                    console.log("User accepted the install prompt");
-                } else {
-                    console.log("User dismissed the install prompt");
-                }
-                deferredPrompt = null; // Reset the deferred prompt
-            });
-        }
-    });
-
-
     // Register service worker
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
