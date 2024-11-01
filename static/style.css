@@ -1,5 +1,29 @@
+/* Base theme variables */
+:root {
+    --bg-color: #FFFFFF;
+    --text-color: #000000;
+    --primary-accent: #2196F3;
+    --secondary-text: #4F4F4F;
+    --button-bg: #6200EE;
+    --button-text: #FFFFFF;
+    --nav-bg: #F1F1F1;
+    --radio-selected-bg: #ababab;
+  }
+  
+  /* Dark theme variables */
+  [data-theme="dark"] {
+    --bg-color: #121212;
+    --text-color: #FFFFFF;
+    --primary-accent: #BB86FC;
+    --secondary-text: #B3B3B3;
+    --button-bg: #BB86FC;
+    --button-text: #121212;
+    --nav-bg: #333333;
+    --radio-selected-bg: #666666;
+  }
+
 body{
-    background-color: #ababab;
+    background-color: var(--bg-color);
     margin:0px;
     padding:0px;
 }
@@ -61,7 +85,7 @@ body{
 
 #profileAddressText p{
     font-size: 8px;
-    color: #CD5459;
+    color: #22d5ed;
 }
 
 #addressPinIcon{
@@ -119,7 +143,7 @@ footer{
     flex-direction: row;
     /* padding: 0.25rem; */
     font-size: 14px;
-    background-color: #fff;
+    background-color: var(--nav-bg);
     border-radius: 0.5rem;
     
 }
@@ -140,7 +164,7 @@ footer{
     cursor: pointer;
     align-items: center;
     justify-content: center;
-    border-radius: 0.5rem;
+    border-radius: 50%; /* 0.5rem */
     border: none;
     padding: .5rem;
     color: rgba(51, 65, 85, 1);
@@ -148,6 +172,6 @@ footer{
 }
 
 .radio input:checked + .name {
-    background-color: #ababab;
+    background-color: var(--radio-selected-bg);
     font-weight: 600;
 }
