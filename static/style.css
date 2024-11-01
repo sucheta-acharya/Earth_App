@@ -95,7 +95,7 @@ body{
     margin-left:0px;
 }
 
-main{
+#homeMain{
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -103,6 +103,7 @@ main{
     margin-top: 40px;
     gap: 20px;
     font-family: 'Source Sans Pro', sans-serif;
+    z-index: 3;
 }
 
 #emergancyButton{
@@ -121,6 +122,22 @@ main{
     width: 90%;
     height: 90%;
 }
+
+#settingsMain{
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 40px;
+    gap: 20px;
+    font-family: 'Source Sans Pro', sans-serif;
+    z-index: 5;
+    transition: all 0.5s ease-in-out;
+}
+
+
+
+
+
 
 footer{
     display: flex;
@@ -175,3 +192,8 @@ footer{
     background-color: var(--radio-selected-bg);
     font-weight: 600;
 }
+
+.hidden{
+    display: none;
+}
+
