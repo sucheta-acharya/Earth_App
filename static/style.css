@@ -1,5 +1,7 @@
 body{
     background-color: #ababab;
+    margin:0px;
+    padding:0px;
 }
 
 #profileHeader{
@@ -103,6 +105,12 @@ footer{
     justify-content: center;
     margin-top: 40px;
     gap: 20px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    margin-left:0px;
+    padding:0px;
 }
 
 #navPanel{
