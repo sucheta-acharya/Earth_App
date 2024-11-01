@@ -1,9 +1,10 @@
-const CACHE_NAME = 'Tremor-cache-v1';
+const CACHE_NAME = 'TremorTrack-cache-v1';
 const urlsToCache = [
     '/',
-    '/index.html',
-    '/styles.css',
-    '/script.js',
+    '/static/style.css',
+    '/static/images/logo.png',
+    '/static/images/favicon.png',
+    '/static/script.js'
 ];
 
 // Install the service worker
