@@ -2,6 +2,8 @@ body{
     background-color: #ababab;
     margin:0px;
     padding:0px;
+    width: 100px;
+    height: 100px;
 }
 
 #profileHeader{
