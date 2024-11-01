@@ -1,7 +1,7 @@
 {
     "name": "TremorTrack",
     "short_name": "TremorTrack",
-    "description": "TremorTrack - Your go-to app for your emergency needs in calamatics. Powered by InnoVibe.",
+    "description": "TremorTrack- Your go-to app for your Emergency. Powered by InnoVibe",
     "start_url": "/",
     "display": "standalone",
     "background_color": "#ffffff",
@@ -40,5 +40,5 @@
             "type": "image/png"
         }
     ]
-}
+  }
   
