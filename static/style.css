@@ -95,15 +95,7 @@ body{
     margin-left:0px;
 }
 
-#homeMain{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-    font-family: 'Source Sans Pro', sans-serif;
-    z-index: 3;
-}
+
 
 #emergancyButton{
     width: 200px;
@@ -120,6 +112,43 @@ body{
 #emergancyButtonIcon{
     width: 90%;
     height: 90%;
+}
+
+#mapMain{
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    font-family: 'Source Sans Pro', sans-serif;
+    z-index: 1;
+}
+
+#cameraMain{
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    font-family: 'Source Sans Pro', sans-serif;
+    z-index: 2;
+}
+
+#homeMain{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    font-family: 'Source Sans Pro', sans-serif;
+    z-index: 3;
+}
+
+#newsMain{
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    font-family: 'Source Sans Pro', sans-serif;
+    z-index: 4;
 }
 
 #settingsMain{
