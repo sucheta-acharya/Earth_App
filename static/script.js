@@ -49,6 +49,78 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 
+    document.getElementById("takePictureButton").addEventListener("click", openCamera);
+    document.getElementById("uploadPictureButton").addEventListener("click", uploadPicture);
+
+    const serverUrl="https://6883cjlh-8080.inc1.devtunnels.ms"
+
+    function openCamera() {
+        const captureInput = document.createElement("input");
+        captureInput.type = "file";
+        captureInput.accept = "image/*";
+        captureInput.capture = "environment"; // Opens the camera on mobile devices
+
+        captureInput.addEventListener("change", async () => {
+            const file = captureInput.files[0];
+            if (file) {
+                previewAndSendImage(file);
+            }
+        });
+
+        captureInput.click();
+    }
+
+    function uploadPicture() {
+        const uploadInput = document.createElement("input");
+        uploadInput.type = "file";
+        uploadInput.accept = "image/*";
+
+        uploadInput.addEventListener("change", async () => {
+            const file = uploadInput.files[0];
+            if (file) {
+                previewAndSendImage(file);
+            }
+        });
+
+        uploadInput.click();
+    }
+
+    async function previewAndSendImage(file) {
+        // Display the image preview
+        const imgURL = URL.createObjectURL(file);
+        const imgPreview = document.createElement("img");
+        imgPreview.src = imgURL;
+        imgPreview.style.width = "100%";
+        imgPreview.style.height = "auto";
+        document.body.appendChild(imgPreview);
+
+        // Send the image to the server
+        const formData = new FormData();
+        formData.append("image", file);
+
+        try {
+            const response = await fetch(serverUrl + "/upload_image", {
+                method: "POST",
+                body: formData
+            });
+            
+            if (response.ok) {
+                console.log("Image uploaded successfully!");
+            } else {
+                console.error("Image upload failed.");
+            }
+        } catch (error) {
+            console.error("Error while uploading image:", error);
+        }
+    }
+
+
+
+
+
+
+
+
     // Select the toggle button
     const themeToggleButton = document.getElementById("theme-toggle");
 
