@@ -94,10 +94,13 @@ document.addEventListener("DOMContentLoaded", function() {
         // imgPreview.style.height = "auto";
         // document.body.appendChild(imgPreview);
 
-        const confirmText = "Image uploaded successfully!";
-        alert(confirmText);
+        const confirmText =document.createElement("p");
+        confirmText.textContent = "Image uploaded successfully!";
+        document.body.appendChild(confirmText);
 
         
+
+        document.body.appendChild();
 
         // Send the image to the server
         const formData = new FormData();
