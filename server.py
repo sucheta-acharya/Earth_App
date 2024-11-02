@@ -5,7 +5,7 @@ import os
 app = Flask(__name__)
 
 # Directory to save uploaded images
-UPLOAD_FOLDER = 'calamaty_Pictures/uploads'
+UPLOAD_FOLDER = 'Calamity_Pictures/uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # Ensure the upload folder exists
