@@ -49,6 +49,33 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 
+    // Select the toggle button
+    const themeToggleButton = document.getElementById("theme-toggle");
+
+    // Function to set theme based on the user's choice or system preference
+    function setTheme(theme) {
+        if (theme === "dark") {
+            themeToggleButton.checked = false;
+        }
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
+    }
+
+    // Check stored theme preference in localStorage or fallback to system preference
+    const savedTheme = localStorage.getItem("theme");
+    const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    if (savedTheme) {
+    setTheme(savedTheme);
+    } else {
+    setTheme(systemPrefersDark ? "dark" : "light");
+    }
+
+    // Toggle theme when button is clicked
+    themeToggleButton.addEventListener("click", () => {
+    const currentTheme = document.documentElement.getAttribute("data-theme");
+    const newTheme = currentTheme === "light" ? "dark" : "light";
+    setTheme(newTheme);
+    });
 
     // Register service worker
     if ('serviceWorker' in navigator) {
