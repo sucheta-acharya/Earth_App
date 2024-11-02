@@ -255,6 +255,7 @@ animation: flickering 2s linear infinite;
     white-space: nowrap;
     border-radius: 6px;
     border: 1px solid #fff3;
+    margin-top: 20px;
 }
 
 #uploadPictureButton:hover{
