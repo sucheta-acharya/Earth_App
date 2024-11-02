@@ -98,7 +98,9 @@ document.addEventListener("DOMContentLoaded", function() {
         confirmText.textContent = "Image uploaded successfully!";
         document.body.appendChild(confirmText);
 
-        
+        setInterval(() => {
+            document.body.removeChild(confirmText);
+        }, 4000);
 
         document.body.appendChild();
 
