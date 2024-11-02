@@ -87,12 +87,17 @@ document.addEventListener("DOMContentLoaded", function() {
 
     async function previewAndSendImage(file) {
         // Display the image preview
-        const imgURL = URL.createObjectURL(file);
-        const imgPreview = document.createElement("img");
-        imgPreview.src = imgURL;
-        imgPreview.style.width = "100%";
-        imgPreview.style.height = "auto";
-        document.body.appendChild(imgPreview);
+        // const imgURL = URL.createObjectURL(file);
+        // const imgPreview = document.createElement("img");
+        // imgPreview.src = imgURL;
+        // imgPreview.style.width = "100%";
+        // imgPreview.style.height = "auto";
+        // document.body.appendChild(imgPreview);
+
+        const confirmText = "Image uploaded successfully!";
+        alert(confirmText);
+
+        
 
         // Send the image to the server
         const formData = new FormData();
