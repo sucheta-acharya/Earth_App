@@ -257,6 +257,10 @@ animation: flickering 2s linear infinite;
     border: 1px solid #fff3;
 }
 
+#uploadPictureButton:hover{
+    box-shadow: 0 0 0 1px var(--bg);
+}
+
 #homeMain{
     display: flex;
     flex-direction: column;
