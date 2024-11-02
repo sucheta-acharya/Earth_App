@@ -88,8 +88,6 @@ document.addEventListener("DOMContentLoaded", function() {
     async function previewAndSendImage(file) {
         const TextParent= document.getElementById("cameraMain");
         const confirmText =document.createElement("p");
-        confirmText.textContent = "Image uploaded successfully!";
-        confirmText.style.color = "green";
         TextParent.appendChild(confirmText);
 
         setInterval(() => {
@@ -108,11 +106,17 @@ document.addEventListener("DOMContentLoaded", function() {
             
             if (response.ok) {
                 console.log("Image uploaded successfully!");
+                confirmText.textContent = "Image uploaded successfully!";
+                confirmText.style.color = "green";
             } else {
                 console.error("Image upload failed.");
+                confirmText.textContent = "Image uploaded failed!";
+                confirmText.style.color = "red";
             }
         } catch (error) {
             console.error("Error while uploading image:", error);
+            confirmText.textContent = "Server error!";
+            confirmText.style.color = "red";
         }
     }
 
