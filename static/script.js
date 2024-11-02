@@ -86,23 +86,15 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     async function previewAndSendImage(file) {
-        // Display the image preview
-        // const imgURL = URL.createObjectURL(file);
-        // const imgPreview = document.createElement("img");
-        // imgPreview.src = imgURL;
-        // imgPreview.style.width = "100%";
-        // imgPreview.style.height = "auto";
-        // document.body.appendChild(imgPreview);
-
+        const TextParent= document.getElementById("cameraMain");
         const confirmText =document.createElement("p");
         confirmText.textContent = "Image uploaded successfully!";
-        document.body.appendChild(confirmText);
+        confirmText.style.color = "green";
+        TextParent.appendChild(confirmText);
 
         setInterval(() => {
-            document.body.removeChild(confirmText);
+            confirmText.remove();
         }, 4000);
-
-        document.body.appendChild();
 
         // Send the image to the server
         const formData = new FormData();
