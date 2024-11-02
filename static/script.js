@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("takePictureButton").addEventListener("click", openCamera);
     document.getElementById("uploadPictureButton").addEventListener("click", uploadPicture);
 
-    const serverUrl="https://6883cjlh-8080.inc1.devtunnels.ms"
+    const serverUrl="https://6883cjlh-8050.inc1.devtunnels.ms";
 
     function openCamera() {
         const captureInput = document.createElement("input");
