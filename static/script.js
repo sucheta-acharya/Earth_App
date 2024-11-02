@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function() {
         radio.addEventListener('change', () => {
             if (radio.checked) {
                 // Get the label (img alt attribute) corresponding to the checked radio button
-                const label = radio.nextElementSibling.getAttribute('alt');
+                const label = radio.nextElementSibling.getAttribute('aria-label');
                 if (label === 'map') {
                     mapMain.style.display = 'flex';
                     cameraMain.style.display = 'none';

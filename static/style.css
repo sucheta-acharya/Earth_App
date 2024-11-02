@@ -1,25 +1,37 @@
 /* Base theme variables */
 :root {
-    --bg-color: #FFFFFF;
+    --bg-color: #ededed;
     --text-color: #000000;
     --primary-accent: #2196F3;
     --secondary-text: #4F4F4F;
     --button-bg: #6200EE;
     --button-text: #FFFFFF;
-    --nav-bg: #F1F1F1;
-    --radio-selected-bg: #ababab;
+    --nav-bg: #a6a6a6;
+    --radio-selected-bg: #ffffff;
+    
+    --map-img: url("/static/images/map-light.png");
+    --camera-img: url("/static/images/camera-light.png");
+    --home-img: url("/static/images/home-light.png");
+    --news-img: url("/static/images/news-light.png");
+    --settings-img: url("/static/images/settings-light.png");
   }
   
   /* Dark theme variables */
   [data-theme="dark"] {
-    --bg-color: #121212;
+    --bg-color: #383838;
     --text-color: #FFFFFF;
     --primary-accent: #BB86FC;
     --secondary-text: #B3B3B3;
     --button-bg: #BB86FC;
     --button-text: #121212;
-    --nav-bg: #333333;
-    --radio-selected-bg: #666666;
+    --nav-bg: #272727;
+    --radio-selected-bg: #ffffff;
+
+    --map-img: url("/static/images/map-dark.png");
+    --camera-img: url("/static/images/camera-dark.png");
+    --home-img: url("/static/images/home-dark.png");
+    --news-img: url("/static/images/news-dark.png");
+    --settings-img: url("/static/images/settings-dark.png");
   }
 
 body{
@@ -110,9 +122,9 @@ h1{
     border: none;
     cursor: pointer;
     border: 4px solid #646464;
-    background: linear-gradient(145deg, #ffffff, #cacaca);
-    box-shadow:  12px 12px 18px #5c5c5c,
-             -12px -12px 18px #bcbcbc;
+    background: #383838;
+    box-shadow:  -5px 5px 36px #2a2a2a,
+             5px -5px 36px #464646;
 }
 
 #emergancyButtonIcon{
@@ -266,6 +278,7 @@ footer{
     flex-direction: row;
     flex: 1 1 auto;
     text-align: center;
+    
 }
 
 .radio input {
@@ -281,7 +294,7 @@ footer{
     border-radius: 50%; /* 0.5rem */
     border: none;
     padding: .5rem;
-    color: rgba(51, 65, 85, 1);
+    /* color: rgba(51, 65, 85, 1); */
     transition: all .15s ease-in-out;
 }
 
@@ -289,6 +302,43 @@ footer{
     background-color: var(--radio-selected-bg);
     font-weight: 600;
 }
+
+#map-icon {
+    background-image: var(--map-img);
+    background-size: contain;
+    width: 40px;
+    height: 40px;
+}
+
+#camera-icon {
+    background-image: var(--camera-img);
+    background-size: contain;
+    width: 40px;
+    height: 40px;
+}
+
+#home-icon {
+    background-image: var(--home-img);
+    background-size: contain;
+    width: 40px;
+    height: 40px;
+}
+
+#news-icon {
+    background-image: var(--news-img);
+    background-size: contain;
+    width: 40px;
+    height: 40px;
+}
+
+#settings-icon {
+    background-image: var(--settings-img);
+    background-size: contain;
+    width: 40px;
+    height: 40px;
+}
+
+
 
 .hidden{
     display: none;
