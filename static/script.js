@@ -88,11 +88,9 @@ document.addEventListener("DOMContentLoaded", function() {
     async function previewAndSendImage(file) {
         const TextParent= document.getElementById("cameraMain");
         const confirmText =document.createElement("p");
-        TextParent.appendChild(confirmText);
+        
 
-        setInterval(() => {
-            confirmText.remove();
-        }, 4000);
+        
 
         // Send the image to the server
         const formData = new FormData();
@@ -118,6 +116,12 @@ document.addEventListener("DOMContentLoaded", function() {
             confirmText.textContent = "Server error!";
             confirmText.style.color = "red";
         }
+
+        TextParent.appendChild(confirmText);
+
+        setInterval(() => {
+            confirmText.remove();
+        }, 4000);
     }
 
 
