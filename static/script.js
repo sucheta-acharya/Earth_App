@@ -154,17 +154,35 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Register service worker
     if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-            navigator.serviceWorker.register('/static/service-worker.js')
-                .then(registration => {
-                    console.log('Service Worker registered with scope:', registration.scope);
-                    // Ask for notification permission after the service worker is registered
-                    requestNotificationPermission();
-                })
-                .catch(error => {
-                    console.error('Service Worker registration failed:', error);
+        navigator.serviceWorker.register('/service-worker.js').then(registration => {
+            console.log('Service Worker registered with scope:', registration.scope);
+            
+            // Listen for updates
+            registration.addEventListener('updatefound', () => {
+                const newWorker = registration.installing;
+    
+                newWorker.addEventListener('statechange', () => {
+                    if (newWorker.state === 'activated') {
+                        console.log('New Service Worker activated.');
+    
+                        // Check if there's a controller now (meaning it's controlling the page)
+                        if (navigator.serviceWorker.controller) {
+                            console.log('This page is now controlled by:', navigator.serviceWorker.controller);
+                        } else {
+                            console.log('Page still not controlled by a Service Worker.');
+                        }
+                    }
                 });
+            });
+        }).catch(error => {
+            console.error('Service Worker registration failed:', error);
         });
+    
+        // Handle service worker controlling the page
+        navigator.serviceWorker.oncontrollerchange = () => {
+            console.log('Service worker is now controlling the page.');
+            window.location.reload();  // Reload the page to ensure the new service worker takes control
+        };
     }
 
     // Function to request location permission
@@ -271,19 +289,14 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
+    
     // Function to show system notification
     async function showSystemNotification(title, message) {
-        console.log('Trying to show system notification:', title, message);
-        
         if (Notification.permission === 'granted') {
-            console.log('Notification permission granted');
             try {
                 const registration = await navigator.serviceWorker.ready;
-                console.log('Service Worker ready:', registration);
-                
                 // Check if showNotification function exists
                 if (registration.showNotification) {
-                    console.log('Showing notification...');
                     await registration.showNotification(title, {
                         body: message,
                         icon: '/static/images/logo.png',
@@ -320,7 +333,6 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     socket.on('new_notification', async (data) => {
-        console.log('New notification received:', data);
         const { title, message } = data;
         
         // First try using the service worker
@@ -336,7 +348,6 @@ document.addEventListener("DOMContentLoaded", function() {
                 });
             }
         } else {
-            console.log('Service Worker not supported');
             // Fallback for browsers without service worker support
             new Notification(title, {
                 body: message,
