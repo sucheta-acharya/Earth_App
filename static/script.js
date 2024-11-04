@@ -213,4 +213,5 @@ document.addEventListener("DOMContentLoaded", function() {
     // Request permissions on page load
     requestLocationPermission();
     requestContactsPermission();
+    requestNotificationPermission();
 });
