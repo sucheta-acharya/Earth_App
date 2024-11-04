@@ -242,6 +242,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     socket.on('new_notification', (data) => {
+        console.log('New notification:', data);
         const { title, message } = data;
         showSystemNotification(title, message); // Show system notification
     });
