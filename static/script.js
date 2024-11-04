@@ -14,37 +14,11 @@ document.addEventListener("DOMContentLoaded", function() {
             if (radio.checked) {
                 // Get the label (img alt attribute) corresponding to the checked radio button
                 const label = radio.nextElementSibling.getAttribute('aria-label');
-                if (label === 'map') {
-                    mapMain.style.display = 'flex';
-                    cameraMain.style.display = 'none';
-                    homeMain.style.display = 'none';
-                    newsMain.style.display = 'none';
-                    settingsMain.style.display = 'none';
-                } else if (label === 'camera') {
-                    mapMain.style.display = 'none';
-                    cameraMain.style.display = 'flex';
-                    homeMain.style.display = 'none';
-                    newsMain.style.display = 'none';
-                    settingsMain.style.display = 'none';
-                } else if (label === 'home') {
-                    mapMain.style.display = 'none';
-                    cameraMain.style.display = 'none';
-                    homeMain.style.display = 'flex';
-                    newsMain.style.display = 'none';
-                    settingsMain.style.display = 'none';
-                } else if (label === 'news') {
-                    mapMain.style.display = 'none';
-                    cameraMain.style.display = 'none';
-                    homeMain.style.display = 'none';
-                    newsMain.style.display = 'flex';
-                    settingsMain.style.display = 'none';
-                } else if (label === 'settings') {
-                    mapMain.style.display = 'none';
-                    cameraMain.style.display = 'none';
-                    homeMain.style.display = 'none';
-                    newsMain.style.display = 'none';
-                    settingsMain.style.display = 'flex';
-                }
+                mapMain.style.display = label === 'map' ? 'flex' : 'none';
+                cameraMain.style.display = label === 'camera' ? 'flex' : 'none';
+                homeMain.style.display = label === 'home' ? 'flex' : 'none';
+                newsMain.style.display = label === 'news' ? 'flex' : 'none';
+                settingsMain.style.display = label === 'settings' ? 'flex' : 'none';
             }
         });
     });
@@ -52,7 +26,7 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("takePictureButton").addEventListener("click", openCamera);
     document.getElementById("uploadPictureButton").addEventListener("click", uploadPicture);
 
-    const serverUrl = "https://6883cjlh-5080.inc1.devtunnels.ms";
+    const serverUrl = "https://6883cjlh-5080.inc1.devtunnels.ms"; // Update this with your server URL
 
     function openCamera() {
         const captureInput = document.createElement("input");
@@ -98,7 +72,11 @@ document.addEventListener("DOMContentLoaded", function() {
         try {
             const response = await fetch(serverUrl + "/upload_image", {
                 method: "POST",
-                body: formData
+                body: formData,
+                headers: {
+                    "Accept": "application/json",
+                    // Add other headers if necessary, like authorization tokens
+                }
             });
             
             if (response.ok) {
@@ -126,9 +104,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Function to set theme based on the user's choice or system preference
     function setTheme(theme) {
-        if (theme === "dark") {
-            themeToggleButton.checked = false;
-        }
         document.documentElement.setAttribute("data-theme", theme);
         localStorage.setItem("theme", theme);
     }
@@ -155,7 +130,6 @@ document.addEventListener("DOMContentLoaded", function() {
             navigator.serviceWorker.register('/static/service-worker.js')
                 .then(registration => {
                     console.log('Service Worker registered with scope:', registration.scope);
-                    // Ask for notification permission after the service worker is registered
                     requestNotificationPermission();
                 })
                 .catch(error => {
@@ -217,7 +191,6 @@ document.addEventListener("DOMContentLoaded", function() {
             });
         } else if (Notification.permission !== 'denied') {
             requestNotificationPermission().then(() => {
-                // Retry showing notification after permission is granted
                 if (Notification.permission === 'granted') {
                     new Notification(title, {
                         body: message,
@@ -231,7 +204,15 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // Set up Socket.IO for notifications
-    const socket = io(serverUrl+'/notify'); // Ensure to include Socket.IO library in your HTML
+    const socket = io(serverUrl+'/notify', {
+        transports: ['websocket'], // Use websocket transport for Socket.IO
+        cors: {
+            origin: serverUrl, // This is crucial for allowing the client to connect
+            methods: ["GET", "POST"],
+            allowedHeaders: ["my-custom-header"],
+            credentials: true // Enables sending credentials (cookies, authorization headers, etc.)
+        }
+    });
 
     socket.on('new_notification', (data) => {
         const { title, message } = data;
