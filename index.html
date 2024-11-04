@@ -19,7 +19,6 @@
     <!-- Include in your HTML head -->
     <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@200..800&display=swap" rel="stylesheet">
     <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
-
 </head>
 <body>
     
@@ -81,6 +80,13 @@
         </div>
     </main>
 
+    <main id="settingsMain" class="hidden">
+        <div id="profileName" style="text-align: center; justify-content: center; align-items: center;">
+            <img id="profileImage" src="/static/images/profilepic.jpg" alt="profileImage">
+            <h1 id="profileNameText">Sucheta Acharya</h1>
+        </div>
+    </main>
+
     <footer>
         <div id="navPanel">
             <label class="radio">
@@ -112,6 +118,5 @@
     
 
 </body>
-<script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
-<script src="static/script.js"></script>
+<script src="/static/script.js"></script>
 </html>

@@ -9,6 +9,9 @@ document.addEventListener("DOMContentLoaded", function() {
     const newsMain = document.getElementById("newsMain");
     const cycloneMain = document.getElementById("cycloneMain");
 
+    const profilephoto = document.getElementById("profileName");
+    const settingsMain = document.getElementById("settingsMain");
+
     const radioButtons = document.querySelectorAll('input[name="radio"]');
 
     // Add an event listener to each radio button
@@ -50,6 +53,15 @@ document.addEventListener("DOMContentLoaded", function() {
                 }
             }
         });
+    });
+
+    profilephoto.addEventListener("click", () => {
+        settingsMain.style.display = "flex";
+        mapMain.style.display = "none";
+        cameraMain.style.display = "none";
+        homeMain.style.display = "none";
+        newsMain.style.display = "none";
+        cycloneMain.style.display = "none";
     });
 
     // Buttons for taking and uploading pictures
