@@ -42,3 +42,43 @@ self.addEventListener('activate', event => {
         })
     );
 });
+
+// Handle push notifications
+self.addEventListener('push', function(event) {
+    const data = event.data ? event.data.json() : { title: 'No Title', message: 'No Message' }; // Default message if no data is provided
+    const options = {
+        body: data.message,
+        icon: '/static/images/logo.png', // Optional icon for the notification
+        badge: '/static/images/logo_fav.png', // Badge icon
+        vibrate: [200, 100, 200], // Vibration pattern
+        actions: [
+            { action: 'explore', title: 'View' },
+            { action: 'close', title: 'Close' }
+        ]
+    };
+
+    event.waitUntil(
+        self.registration.showNotification(data.title, options)
+    );
+});
+
+// Handle notification clicks
+self.addEventListener('notificationclick', function(event) {
+    event.notification.close(); // Close the notification
+
+    // Open the PWA app or focus on it
+    event.waitUntil(
+        clients.matchAll({ type: 'window' }).then(clients => {
+            // Check if there is already an open client (window)
+            const client = clients.find(c => c.url === 'https://tremor-track-innovibe.netlify.app/' && 'focus' in c); // Replace with your PWA URL
+
+            if (client) {
+                // If the client is already open, focus on it
+                return client.focus();
+            } else {
+                // If not, open a new window for the PWA
+                return clients.openWindow('https://tremor-track-innovibe.netlify.app/'); // Replace with your PWA URL
+            }
+        })
+    );
+});
