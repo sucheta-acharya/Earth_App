@@ -171,27 +171,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Register service worker
     if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('/service-worker.js').then(registration => {
-            console.log('Service Worker registered with scope:', registration.scope);
-            
-            // Listen for updates
-            registration.addEventListener('updatefound', () => {
-                const newWorker = registration.installing;
-    
-                newWorker.addEventListener('statechange', () => {
-                    if (newWorker.state === 'activated') {
-                        console.log('New Service Worker activated.');
-    
-                        // Check if there's a controller now (meaning it's controlling the page)
-                        if (navigator.serviceWorker.controller) {
-                            console.log('This page is now controlled by:', navigator.serviceWorker.controller);
-                        } else {
-                            console.log('Page still not controlled by a Service Worker.');
-                        }
-                    }
-                });
-            });
-        }).catch(error => {
+        serviceWorkerRegistration().catch(error => {
             console.error('Service Worker registration failed:', error);
         });
     
@@ -378,5 +358,30 @@ document.addEventListener("DOMContentLoaded", function() {
     requestLocationPermission();
     requestContactsPermission();
     requestNotificationPermission();
+
+
+    function serviceWorkerRegistration() {
+        navigator.serviceWorker.register('/service-worker.js').then(registration => {
+            console.log('Service Worker registered with scope:', registration.scope);
+            
+            // Listen for updates
+            registration.addEventListener('updatefound', () => {
+                const newWorker = registration.installing;
+    
+                newWorker.addEventListener('statechange', () => {
+                    if (newWorker.state === 'activated') {
+                        console.log('New Service Worker activated.');
+    
+                        // Check if there's a controller now (meaning it's controlling the page)
+                        if (navigator.serviceWorker.controller) {
+                            console.log('This page is now controlled by:', navigator.serviceWorker.controller);
+                        } else {
+                            console.log('Page still not controlled by a Service Worker.');
+                        }
+                    }
+                });
+            });
+        })
+    }
     
 });
