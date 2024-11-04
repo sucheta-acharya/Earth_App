@@ -215,7 +215,7 @@ document.addEventListener("DOMContentLoaded", function() {
         if (Notification.permission === 'granted') {
             new Notification(title, {
                 body: message,
-                icon: '/static/images/logo.png' // Optional: Add an icon URL for your notification
+                // icon: '/static/images/logo.png' // Optional: Add an icon URL for your notification
             });
         } else if (Notification.permission !== 'denied') {
             requestNotificationPermission().then(() => {
