@@ -234,7 +234,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Set up Socket.IO for notifications
 
-    const socket = io(serverUrl, {
+    const socket = io(serverUrl+'/notify', {
         transports: ['websocket'],  // Use only WebSocket for real-time connection
         reconnectionAttempts: 5,    // Number of reconnection attempts
         reconnectionDelay: 1000,    // Delay before trying to reconnect
