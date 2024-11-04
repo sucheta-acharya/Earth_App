@@ -26,30 +26,35 @@ document.addEventListener("DOMContentLoaded", function() {
                     homeMain.style.display = 'none';
                     newsMain.style.display = 'none';
                     cycloneMain.style.display = 'none';
+                    settingsMain.style.display = "none";
                 } else if (label === 'camera') {
                     mapMain.style.display = 'none';
                     cameraMain.style.display = 'flex';
                     homeMain.style.display = 'none';
                     newsMain.style.display = 'none';
                     cycloneMain.style.display = 'none';
+                    settingsMain.style.display = "none";
                 } else if (label === 'home') {
                     mapMain.style.display = 'none';
                     cameraMain.style.display = 'none';
                     homeMain.style.display = 'flex';
                     newsMain.style.display = 'none';
                     cycloneMain.style.display = 'none';
+                    settingsMain.style.display = "none";
                 } else if (label === 'news') {
                     mapMain.style.display = 'none';
                     cameraMain.style.display = 'none';
                     homeMain.style.display = 'none';
                     newsMain.style.display = 'flex';
                     cycloneMain.style.display = 'none';
+                    settingsMain.style.display = "none";
                 } else if (label === 'cyclone') {
                     mapMain.style.display = 'none';
                     cameraMain.style.display = 'none';
                     homeMain.style.display = 'none';
                     newsMain.style.display = 'none';
                     cycloneMain.style.display = 'flex';
+                    settingsMain.style.display = "none";
                 }
             }
         });
