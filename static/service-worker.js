@@ -7,27 +7,28 @@ const urlsToCache = [
     '/static/script.js'
 ];
 
-// Install the service worker
+// Install the service worker and cache assets
 self.addEventListener('install', event => {
     event.waitUntil(
-        caches.open(CACHE_NAME)
-            .then(cache => {
-                return cache.addAll(urlsToCache);
-            })
+        caches.open(CACHE_NAME).then(cache => {
+            console.log('Opened cache and caching assets');
+            return cache.addAll(urlsToCache);
+        })
     );
 });
 
 // Cache and return requests
 self.addEventListener('fetch', event => {
     event.respondWith(
-        caches.match(event.request)
-            .then(response => {
-                return response || fetch(event.request);
-            })
+        caches.match(event.request).then(response => {
+            return response || fetch(event.request);
+        }).catch(error => {
+            console.error('Error fetching resource:', error);
+        })
     );
 });
 
-// Update a service worker
+// Update the service worker and delete old caches
 self.addEventListener('activate', event => {
     const cacheWhitelist = [CACHE_NAME];
     event.waitUntil(
@@ -35,6 +36,7 @@ self.addEventListener('activate', event => {
             return Promise.all(
                 cacheNames.map(cacheName => {
                     if (cacheWhitelist.indexOf(cacheName) === -1) {
+                        console.log('Deleting old cache:', cacheName);
                         return caches.delete(cacheName);
                     }
                 })
@@ -44,13 +46,17 @@ self.addEventListener('activate', event => {
 });
 
 // Handle push notifications
-self.addEventListener('push', function(event) {
-    const data = event.data ? event.data.json() : { title: 'No Title', message: 'No Message' }; // Default message if no data is provided
+self.addEventListener('push', event => {
+    console.log('Push event received:', event);
+
+    const data = event.data ? event.data.json() : { title: 'No Title', message: 'No Message' }; 
+    console.log('Push data:', data);
+
     const options = {
-        body: data.message,
-        icon: '/static/images/logo.png', // Optional icon for the notification
-        badge: '/static/images/logo_fav.png', // Badge icon
-        vibrate: [200, 100, 200], // Vibration pattern
+        body: data.message || 'No message provided',
+        icon: '/static/images/logo.png',
+        badge: '/static/images/logo_fav.png',
+        vibrate: [200, 100, 200],
         actions: [
             { action: 'explore', title: 'View' },
             { action: 'close', title: 'Close' }
@@ -58,26 +64,27 @@ self.addEventListener('push', function(event) {
     };
 
     event.waitUntil(
-        self.registration.showNotification(data.title, options)
+        self.registration.showNotification(data.title || 'Notification', options)
     );
 });
 
 // Handle notification clicks
-self.addEventListener('notificationclick', function(event) {
+self.addEventListener('notificationclick', event => {
+    console.log('Notification click event:', event);
+
     event.notification.close(); // Close the notification
 
-    // Open the PWA app or focus on it
     event.waitUntil(
-        clients.matchAll({ type: 'window' }).then(clients => {
-            // Check if there is already an open client (window)
-            const client = clients.find(c => c.url === 'https://tremor-track-innovibe.netlify.app/' && 'focus' in c); // Replace with your PWA URL
-
+        clients.matchAll({ type: 'window' }).then(clientList => {
+            // Check if the app is already open
+            const client = clientList.find(c => c.url === 'https://tremor-track-innovibe.netlify.app/' && 'focus' in c);
+            
             if (client) {
-                // If the client is already open, focus on it
+                console.log('Focusing on existing PWA window');
                 return client.focus();
             } else {
-                // If not, open a new window for the PWA
-                return clients.openWindow('https://tremor-track-innovibe.netlify.app/'); // Replace with your PWA URL
+                console.log('Opening new PWA window');
+                return clients.openWindow('https://tremor-track-innovibe.netlify.app/');
             }
         })
     );
