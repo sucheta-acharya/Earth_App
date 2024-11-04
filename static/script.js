@@ -233,7 +233,13 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // Set up Socket.IO for notifications
-    const socket = io(serverUrl); // Ensure to include Socket.IO library in your HTML
+
+    const socket = io(serverUrl, {
+        transports: ['websocket'],  // Use only WebSocket for real-time connection
+        reconnectionAttempts: 5,    // Number of reconnection attempts
+        reconnectionDelay: 1000,    // Delay before trying to reconnect
+        timeout: 2000,              // Connection timeout
+    });
 
     socket.on('new_notification', (data) => {
         const { title, message } = data;
