@@ -1,5 +1,7 @@
 document.addEventListener("DOMContentLoaded", function() {
-    
+
+    const serverUrl = "https://6883cjlh-5080.inc1.devtunnels.ms";
+
     const mapMain = document.getElementById("mapMain");
     const cameraMain = document.getElementById("cameraMain");
     const homeMain = document.getElementById("homeMain");
@@ -52,8 +54,6 @@ document.addEventListener("DOMContentLoaded", function() {
     // Buttons for taking and uploading pictures
     document.getElementById("takePictureButton").addEventListener("click", openCamera);
     document.getElementById("uploadPictureButton").addEventListener("click", uploadPicture);
-
-    const serverUrl = "https://6883cjlh-5080.inc1.devtunnels.ms";
 
     function openCamera() {
         const captureInput = document.createElement("input");
@@ -233,7 +233,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // Set up Socket.IO for notifications
-    const socket = io(serverUrl + '/notify'); // Ensure to include Socket.IO library in your HTML
+    const socket = io(serverUrl); // Ensure to include Socket.IO library in your HTML
 
     socket.on('new_notification', (data) => {
         const { title, message } = data;
