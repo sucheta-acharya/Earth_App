@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function() {
 
     const serverUrl = "https://6883cjlh-5080.inc1.devtunnels.ms";
-    const GeoApiKey = '8e3abea7201b4688b1052e9e338cd5a8'; // Replace with your OpenCage API key
+    const GeoApiKey = 'bda91ddaeb1f46e69e4a39bcc3523985'; // Replace with your OpenCage API key
 
     const mapMain = document.getElementById("mapMain");
     const cameraMain = document.getElementById("cameraMain");
