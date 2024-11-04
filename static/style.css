@@ -51,6 +51,8 @@ body{
     margin-top: 10px;
     gap:80px;
     margin-bottom: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 #profileName{
