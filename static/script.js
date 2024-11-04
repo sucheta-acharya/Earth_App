@@ -273,9 +273,11 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Function to show system notification
     async function showSystemNotification(title, message) {
+        console.log('Trying to show system notification:', title, message);
         if (Notification.permission === 'granted') {
             try {
                 const registration = await navigator.serviceWorker.ready;
+                console.log('Service Worker ready:', registration);
                 await registration.showNotification(title, {
                     body: message,
                     icon: '/static/images/logo.png',
