@@ -315,6 +315,7 @@ document.addEventListener("DOMContentLoaded", function() {
         // First try using the service worker
         if ('serviceWorker' in navigator) {
             try {
+                console.log('Trying to show service worker notification:', title, message);
                 await showSystemNotification(title, message);
             } catch (error) {
                 console.error('Service Worker notification failed:', error);
