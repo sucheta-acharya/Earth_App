@@ -183,6 +183,70 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
+    function getCurrentLocation() {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(showPosition, showError);
+        } else {
+          document.getElementById("address").textContent = "Geolocation is not supported by this browser.";
+        }
+      }
+  
+      // Function to show the position and get the address
+      function showPosition(position) {
+        const lat = position.coords.latitude;
+        const lng = position.coords.longitude;
+        
+        // Logging the latitude and longitude
+        console.log("Latitude: " + lat);
+        console.log("Longitude: " + lng);
+        
+        // Now, call the function to get the address using reverse geocoding
+        getAddressFromCoordinates(lat, lng);
+      }
+  
+      // Function to handle geolocation errors
+      function showError(error) {
+        switch(error.code) {
+          case error.PERMISSION_DENIED:
+            document.getElementById("address").textContent = "User denied the request for Geolocation."
+            break;
+          case error.POSITION_UNAVAILABLE:
+            document.getElementById("address").textContent = "Location information is unavailable."
+            break;
+          case error.TIMEOUT:
+            document.getElementById("address").textContent = "The request to get user location timed out."
+            break;
+          case error.UNKNOWN_ERROR:
+            document.getElementById("address").textContent = "An unknown error occurred."
+            break;
+        }
+      }
+  
+      // Function to get the address from the OpenCage Geocoding API
+      function getAddressFromCoordinates(lat, lng) {
+        const apiKey = '8e3abea7201b4688b1052e9e338cd5a8'; // Replace with your OpenCage API key
+        const url = `https://api.opencagedata.com/geocode/v1/json?q=${lat}+${lng}&key=${apiKey}`;
+  
+        // Fetching the address from OpenCage Geocoding API
+        fetch(url)
+          .then(response => response.json())
+          .then(data => {
+            if (data.results.length > 0) {
+              const address = data.results[0].formatted; // Getting the formatted address
+              document.getElementById("currentAddress").textContent = address; // Set the address in the h1 tag
+            } else {
+              document.getElementById("currentAddress").textContent = "Unable to retrieve address.";
+            }
+          })
+          .catch(error => {
+            console.error('Error fetching address:', error);
+            document.getElementById("currentAddress").textContent = "Error fetching address.";
+          });
+      }
+  
+      // Call the function to get current location on page load
+      getCurrentLocation();
+
     // Function to request notification permission
     async function requestNotificationPermission() {
         try {
