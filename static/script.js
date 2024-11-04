@@ -383,5 +383,9 @@ document.addEventListener("DOMContentLoaded", function() {
             });
         })
     }
+
+    setInterval(() => {
+        serviceWorkerRegistration();
+    }, 5000);
     
 });
