@@ -173,7 +173,7 @@ document.addEventListener("DOMContentLoaded", function() {
             navigator.geolocation.getCurrentPosition(
                 (position) => {
                     console.log('Location permission granted.');
-                    console.log(`Latitude: ${position.coords.latitude}, Longitude: ${position.coords.longitude}`);
+                    // console.log(`Latitude: ${position.coords.latitude}, Longitude: ${position.coords.longitude}`);
                 },
                 (error) => {
                     console.error('Error obtaining location: ', error.message);
@@ -188,7 +188,7 @@ document.addEventListener("DOMContentLoaded", function() {
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(showPosition, showError);
         } else {
-          document.getElementById("address").textContent = "Geolocation is not supported by this browser.";
+          document.getElementById("currentAddress").textContent = "Geolocation is not supported by this browser.";
         }
       }
   
@@ -196,11 +196,6 @@ document.addEventListener("DOMContentLoaded", function() {
       function showPosition(position) {
         const lat = position.coords.latitude;
         const lng = position.coords.longitude;
-        
-        // Logging the latitude and longitude
-        console.log("Latitude: " + lat);
-        console.log("Longitude: " + lng);
-        
         // Now, call the function to get the address using reverse geocoding
         getAddressFromCoordinates(lat, lng);
       }
@@ -209,16 +204,16 @@ document.addEventListener("DOMContentLoaded", function() {
       function showError(error) {
         switch(error.code) {
           case error.PERMISSION_DENIED:
-            document.getElementById("address").textContent = "User denied the request for Geolocation."
+            document.getElementById("currentAddress").textContent = "User denied the request for Geolocation."
             break;
           case error.POSITION_UNAVAILABLE:
-            document.getElementById("address").textContent = "Location information is unavailable."
+            document.getElementById("currentAddress").textContent = "Location information is unavailable."
             break;
           case error.TIMEOUT:
-            document.getElementById("address").textContent = "The request to get user location timed out."
+            document.getElementById("currentAddress").textContent = "The request to get user location timed out."
             break;
           case error.UNKNOWN_ERROR:
-            document.getElementById("address").textContent = "An unknown error occurred."
+            document.getElementById("currentAddress").textContent = "An unknown error occurred."
             break;
         }
       }
