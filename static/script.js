@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const cameraMain = document.getElementById("cameraMain");
     const homeMain = document.getElementById("homeMain");
     const newsMain = document.getElementById("newsMain");
-    const settingsMain = document.getElementById("settingsMain");
+    const cycloneMain = document.getElementById("cycloneMain");
 
     const radioButtons = document.querySelectorAll('input[name="radio"]');
 
@@ -22,31 +22,31 @@ document.addEventListener("DOMContentLoaded", function() {
                     cameraMain.style.display = 'none';
                     homeMain.style.display = 'none';
                     newsMain.style.display = 'none';
-                    settingsMain.style.display = 'none';
+                    cycloneMain.style.display = 'none';
                 } else if (label === 'camera') {
                     mapMain.style.display = 'none';
                     cameraMain.style.display = 'flex';
                     homeMain.style.display = 'none';
                     newsMain.style.display = 'none';
-                    settingsMain.style.display = 'none';
+                    cycloneMain.style.display = 'none';
                 } else if (label === 'home') {
                     mapMain.style.display = 'none';
                     cameraMain.style.display = 'none';
                     homeMain.style.display = 'flex';
                     newsMain.style.display = 'none';
-                    settingsMain.style.display = 'none';
+                    cycloneMain.style.display = 'none';
                 } else if (label === 'news') {
                     mapMain.style.display = 'none';
                     cameraMain.style.display = 'none';
                     homeMain.style.display = 'none';
                     newsMain.style.display = 'flex';
-                    settingsMain.style.display = 'none';
-                } else if (label === 'settings') {
+                    cycloneMain.style.display = 'none';
+                } else if (label === 'cyclone') {
                     mapMain.style.display = 'none';
                     cameraMain.style.display = 'none';
                     homeMain.style.display = 'none';
                     newsMain.style.display = 'none';
-                    settingsMain.style.display = 'flex';
+                    cycloneMain.style.display = 'flex';
                 }
             }
         });

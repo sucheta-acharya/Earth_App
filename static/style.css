@@ -14,7 +14,7 @@
     --camera-img: url("/static/images/camera-light.png");
     --home-img: url("/static/images/home-light.png");
     --news-img: url("/static/images/news-light.png");
-    --settings-img: url("/static/images/settings-light.png");
+    --cyclone-img: url("/static/images/cyclone-light.png");
   }
   
   /* Dark theme variables */
@@ -33,7 +33,7 @@
     --camera-img: url("/static/images/camera-dark.png");
     --home-img: url("/static/images/home-dark.png");
     --news-img: url("/static/images/news-dark.png");
-    --settings-img: url("/static/images/settings-dark.png");
+    --cyclone-img: url("/static/images/cyclone-dark.png");
   }
 
 body{
@@ -284,7 +284,7 @@ animation: flickering 2s linear infinite;
     transition: all 0.5s ease-in-out;
 }
 
-#settingsMain{
+#cycloneMain{
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -295,7 +295,7 @@ animation: flickering 2s linear infinite;
     transition: all 0.5s ease-in-out;
 }
 
-#settingsMain div{
+#cycloneMain div{
     display:flex;
     flex-direction: row;
     align-items: center;
@@ -443,8 +443,8 @@ footer{
     height: 40px;
 }
 
-#settings-icon {
-    background-image: var(--settings-img);
+#cyclone-icon {
+    background-image: var(--cyclone-img);
     background-size: contain;
     width: 40px;
     height: 40px;
