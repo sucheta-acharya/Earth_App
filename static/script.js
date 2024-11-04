@@ -231,7 +231,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // Set up Socket.IO for notifications
-    const socket = io(serverUrl); // Ensure to include Socket.IO library in your HTML
+    const socket = io(serverUrl+'/notify'); // Ensure to include Socket.IO library in your HTML
 
     socket.on('new_notification', (data) => {
         const { title, message } = data;
