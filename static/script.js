@@ -204,7 +204,7 @@ document.addEventListener("DOMContentLoaded", function() {
       function showError(error) {
         switch(error.code) {
           case error.PERMISSION_DENIED:
-            document.getElementById("currentAddress").textContent = "User denied the request for Geolocation."
+            document.getElementById("currentAddress").textContent = "You denied the request for Geolocation."
             break;
           case error.POSITION_UNAVAILABLE:
             document.getElementById("currentAddress").textContent = "Location information is unavailable."
