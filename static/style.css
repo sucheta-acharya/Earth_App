@@ -108,6 +108,7 @@ body{
 
 #currentAddress{
     display: flex;
+    word-wrap: normal;
     width:15px;
 }
 
