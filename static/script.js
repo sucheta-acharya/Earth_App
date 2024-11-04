@@ -323,6 +323,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 });
             }
         } else {
+            console.log('Service Worker not supported');
             // Fallback for browsers without service worker support
             new Notification(title, {
                 body: message,
