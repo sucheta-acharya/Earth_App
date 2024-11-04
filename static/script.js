@@ -184,16 +184,17 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // Function to request notification permission
-    function requestNotificationPermission() {
-        Notification.requestPermission().then((permission) => {
+    async function requestNotificationPermission() {
+        try {
+            const permission = await Notification.requestPermission();
             if (permission === 'granted') {
                 console.log('Notification permission granted.');
             } else {
                 console.error('Notification permission denied.');
             }
-        }).catch(error => {
+        } catch (error) {
             console.error('Error requesting notification permission:', error);
-        });
+        }
     }
 
     // Function to request contacts permission
@@ -211,29 +212,28 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // Function to show system notification
-    function showSystemNotification(title, message) {
-        alert(`System Notification: ${title}\n${message}`);
+    async function showSystemNotification(title, message) {
         if (Notification.permission === 'granted') {
-            navigator.serviceWorker.getRegistration().then(registration => {
-                if (registration) {
-                    registration.showNotification(title, {
-                        body: message,
-                        icon: '/static/images/logo.png' // Optional: Add an icon URL for your notification
-                    });
-                }
-            });
-        } else if (Notification.permission !== 'denied') {
-            requestNotificationPermission().then(() => {
-                // Retry showing notification after permission is granted
-                if (Notification.permission === 'granted') {
-                    new Notification(title, {
-                        body: message,
-                        icon: '/static/images/logo.png' // Optional: Add an icon URL for your notification
-                    });
-                }
-            });
+            try {
+                const registration = await navigator.serviceWorker.ready;
+                await registration.showNotification(title, {
+                    body: message,
+                    icon: '/static/images/logo.png',
+                    badge: '/static/images/logo_fav.png',
+                    vibrate: [200, 100, 200],
+                    requireInteraction: true, // Notification persists until user interacts
+                    actions: [
+                        { action: 'explore', title: 'View' },
+                        { action: 'close', title: 'Close' }
+                    ]
+                });
+            } catch (error) {
+                console.error('Error showing notification:', error);
+            }
         } else {
-            console.error('Notification permission not granted.');
+            console.error('Notification permission not granted');
+            // Request permission again if needed
+            await requestNotificationPermission();
         }
     }
 
@@ -246,11 +246,31 @@ document.addEventListener("DOMContentLoaded", function() {
         timeout: 2000,              // Connection timeout
     });
 
-    socket.on('new_notification', (data) => {
-        console.log('New notification:', data);
+    socket.on('new_notification', async (data) => {
+        console.log('New notification received:', data);
         const { title, message } = data;
-        showSystemNotification(title, message); // Show system notification
+        
+        // First try using the service worker
+        if ('serviceWorker' in navigator) {
+            try {
+                await showSystemNotification(title, message);
+            } catch (error) {
+                console.error('Service Worker notification failed:', error);
+                // Fallback to regular notification
+                new Notification(title, {
+                    body: message,
+                    icon: '/static/images/logo.png'
+                });
+            }
+        } else {
+            // Fallback for browsers without service worker support
+            new Notification(title, {
+                body: message,
+                icon: '/static/images/logo.png'
+            });
+        }
     });
+
 
     // Request permissions on page load
     requestLocationPermission();
