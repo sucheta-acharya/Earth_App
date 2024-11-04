@@ -45,16 +45,14 @@ self.addEventListener('activate', event => {
     );
 });
 
-self.addEventListener('push', event => {
-    console.log('Push event received:', event);
-
-    const data = event.data ? event.data.json() : { title: 'No Title', message: 'No Message' }; 
-    console.log('Push data:', data);
+self.addEventListener('push', (event) => {
+    const data = event.data ? event.data.json() : {};
+    const { title, message } = data; // Assuming payload is structured this way
 
     const options = {
-        body: data.message || 'No message provided',
-        icon: '/static/images/logo.png',
-        badge: '/static/images/logo_fav.png',
+        body: message,
+        icon: '/static/images/logo.png', // Ensure this path is correct
+        badge: '/static/images/logo_fav.png', // Ensure this path is correct
         vibrate: [200, 100, 200],
         requireInteraction: true,
         actions: [
@@ -64,7 +62,7 @@ self.addEventListener('push', event => {
     };
 
     event.waitUntil(
-        self.registration.showNotification(data.title || 'Notification', options)
+        self.registration.showNotification(title, options)
     );
 });
 
