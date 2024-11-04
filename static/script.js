@@ -49,6 +49,7 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 
+    // Buttons for taking and uploading pictures
     document.getElementById("takePictureButton").addEventListener("click", openCamera);
     document.getElementById("uploadPictureButton").addEventListener("click", uploadPicture);
 
@@ -107,7 +108,8 @@ document.addEventListener("DOMContentLoaded", function() {
                 confirmText.style.color = "green";
             } else {
                 console.error("Image upload failed.");
-                confirmText.textContent = "Image upload failed!";
+                const errorData = await response.json();
+                confirmText.textContent = `Image upload failed! ${errorData.error || ''}`;
                 confirmText.style.color = "red";
             }
         } catch (error) {
