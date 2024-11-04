@@ -73,6 +73,7 @@ body{
 #profileNameText{
     display:flex;
     flex-direction: column;
+    word-wrap: unset;
     font-size: 20px;
     margin-left: 10px;
     font-family: 'Oxanium', sans-serif;
