@@ -274,21 +274,31 @@ document.addEventListener("DOMContentLoaded", function() {
     // Function to show system notification
     async function showSystemNotification(title, message) {
         console.log('Trying to show system notification:', title, message);
+        
         if (Notification.permission === 'granted') {
+            console.log('Notification permission granted');
             try {
                 const registration = await navigator.serviceWorker.ready;
                 console.log('Service Worker ready:', registration);
-                await registration.showNotification(title, {
-                    body: message,
-                    icon: '/static/images/logo.png',
-                    badge: '/static/images/logo_fav.png',
-                    vibrate: [200, 100, 200],
-                    requireInteraction: true, // Notification persists until user interacts
-                    actions: [
-                        { action: 'explore', title: 'View' },
-                        { action: 'close', title: 'Close' }
-                    ]
-                });
+                
+                // Check if showNotification function exists
+                if (registration.showNotification) {
+                    console.log('Showing notification...');
+                    await registration.showNotification(title, {
+                        body: message,
+                        icon: '/static/images/logo.png',
+                        badge: '/static/images/logo_fav.png',
+                        vibrate: [200, 100, 200],
+                        requireInteraction: true, // Notification persists until user interacts
+                        actions: [
+                            { action: 'explore', title: 'View' },
+                            { action: 'close', title: 'Close' }
+                        ]
+                    });
+                    console.log('Notification shown successfully.');
+                } else {
+                    console.error('showNotification is not a function.');
+                }
             } catch (error) {
                 console.error('Error showing notification:', error);
             }
@@ -298,6 +308,7 @@ document.addEventListener("DOMContentLoaded", function() {
             await requestNotificationPermission();
         }
     }
+    
 
     // Set up Socket.IO for notifications
 
@@ -315,7 +326,6 @@ document.addEventListener("DOMContentLoaded", function() {
         // First try using the service worker
         if ('serviceWorker' in navigator) {
             try {
-                console.log('Trying to show service worker notification:', title, message);
                 await showSystemNotification(title, message);
             } catch (error) {
                 console.error('Service Worker notification failed:', error);
