@@ -116,8 +116,6 @@ document.addEventListener("DOMContentLoaded", function() {
             confirmText.style.color = "red";
         }
 
-        
-
         setTimeout(() => {
             confirmText.remove();
         }, 4000);
@@ -209,6 +207,36 @@ document.addEventListener("DOMContentLoaded", function() {
             console.error('Contacts API is not supported by this browser.');
         }
     }
+
+    // Function to show system notification
+    function showSystemNotification(title, message) {
+        if (Notification.permission === 'granted') {
+            new Notification(title, {
+                body: message,
+                icon: '/static/images/logo.png' // Optional: Add an icon URL for your notification
+            });
+        } else if (Notification.permission !== 'denied') {
+            requestNotificationPermission().then(() => {
+                // Retry showing notification after permission is granted
+                if (Notification.permission === 'granted') {
+                    new Notification(title, {
+                        body: message,
+                        icon: '/static/images/logo.png' // Optional: Add an icon URL for your notification
+                    });
+                }
+            });
+        } else {
+            console.error('Notification permission not granted.');
+        }
+    }
+
+    // Set up Socket.IO for notifications
+    const socket = io(serverUrl); // Ensure to include Socket.IO library in your HTML
+
+    socket.on('new_notification', (data) => {
+        const { title, message } = data;
+        showSystemNotification(title, message); // Show system notification
+    });
 
     // Request permissions on page load
     requestLocationPermission();
