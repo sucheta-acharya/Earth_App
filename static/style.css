@@ -109,7 +109,7 @@ body{
 #currentAddress{
     display: flex;
     word-wrap: normal;
-    width:15px;
+    width:22px;
 }
 
 #addressPinIcon{
