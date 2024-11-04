@@ -50,6 +50,7 @@ body{
     justify-content: space-between;
     margin-top: 10px;
     gap:85px;
+    margin-bottom: 20px;
 }
 
 #profileName{

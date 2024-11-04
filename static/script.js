@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", function() {
 
     const serverUrl = "https://6883cjlh-5080.inc1.devtunnels.ms";
+    const GeoApiKey = '8e3abea7201b4688b1052e9e338cd5a8'; // Replace with your OpenCage API key
 
     const mapMain = document.getElementById("mapMain");
     const cameraMain = document.getElementById("cameraMain");
@@ -224,8 +225,8 @@ document.addEventListener("DOMContentLoaded", function() {
   
       // Function to get the address from the OpenCage Geocoding API
       function getAddressFromCoordinates(lat, lng) {
-        const apiKey = '8e3abea7201b4688b1052e9e338cd5a8'; // Replace with your OpenCage API key
-        const url = `https://api.opencagedata.com/geocode/v1/json?q=${lat}+${lng}&key=${apiKey}`;
+        
+        const url = `https://api.opencagedata.com/geocode/v1/json?q=${lat}+${lng}&key=${GeoApiKey}`;
   
         // Fetching the address from OpenCage Geocoding API
         fetch(url)
