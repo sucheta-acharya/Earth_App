@@ -212,6 +212,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Function to show system notification
     function showSystemNotification(title, message) {
+        alert(`System Notification: ${title}\n${message}`);
         if (Notification.permission === 'granted') {
             navigator.serviceWorker.getRegistration().then(registration => {
                 if (registration) {
