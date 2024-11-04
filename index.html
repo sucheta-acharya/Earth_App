@@ -19,6 +19,21 @@
     <!-- Include in your HTML head -->
     <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@200..800&display=swap" rel="stylesheet">
     <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+    <script>
+        // Check if the browser supports service workers
+        if ('serviceWorker' in navigator) {
+            // Register the service worker
+            navigator.serviceWorker.register('/path/to/service-worker.js')
+                .then((registration) => {
+                    console.log('Service Worker registered with scope:', registration.scope);
+                })
+                .catch((error) => {
+                    console.error('Service Worker registration failed:', error);
+                });
+        } else {
+            console.warn('Service workers are not supported in this browser.');
+        }
+    </script>
 </head>
 <body>
     
