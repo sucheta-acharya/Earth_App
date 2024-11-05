@@ -176,13 +176,18 @@ document.addEventListener("DOMContentLoaded", function() {
                 const newWorker = registration.installing;
                 newWorker.onstatechange = () => {
                     if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                        // New content is available; notify user or force update
-                        if (confirm("New version available. Refresh to update?")) {
-                            newWorker.postMessage({ action: 'skipWaiting' });
-                        }
+                        // New content is available, prompt user to update or force an update
+                        console.log("New version available. Forcing update.");
+                        newWorker.postMessage({ action: 'skipWaiting' });
                     }
                 };
             };
+        });
+    
+        // Listen for 'controllerchange' event to reload the page after the new service worker activates
+        navigator.serviceWorker.addEventListener('controllerchange', () => {
+            console.log("Controller changed. Reloading page...");
+            window.location.reload();
         });
     }
     
@@ -389,8 +394,8 @@ document.addEventListener("DOMContentLoaded", function() {
         })
     }
 
-    // setInterval(() => {
-    //     serviceWorkerRegistration();
-    // }, 5000);
+    setInterval(() => {
+        serviceWorkerRegistration();
+    }, 5000);
     
 });

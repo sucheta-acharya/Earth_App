@@ -25,7 +25,9 @@ self.addEventListener('fetch', event => {
     console.log('Fetching:', event.request.url);
     event.respondWith(
         caches.match(event.request).then(response => {
+            // Try the cache first, if no match, fetch from the network
             return response || fetch(event.request).then(fetchResponse => {
+                // Update the cache with the fresh network response
                 return caches.open(CACHE_NAME).then(cache => {
                     cache.put(event.request, fetchResponse.clone());
                     return fetchResponse;
@@ -37,7 +39,7 @@ self.addEventListener('fetch', event => {
     );
 });
 
-// Activate the new service worker, delete old caches and notify clients
+// Activate the new service worker, delete old caches, and notify clients
 self.addEventListener('activate', event => {
     console.log('Activating new service worker...');
     const cacheWhitelist = [CACHE_NAME];
@@ -54,7 +56,7 @@ self.addEventListener('activate', event => {
         }).then(() => {
             // Take control of any open clients immediately
             console.log('Service Worker activated, claiming clients.');
-            return self.clients.claim();  // This is crucial
+            return self.clients.claim();
         })
     );
 });
@@ -62,58 +64,14 @@ self.addEventListener('activate', event => {
 // Listen for messages from the client to prompt an update
 self.addEventListener('message', event => {
     if (event.data && event.data.action === 'skipWaiting') {
+        console.log('Skipping waiting and activating new service worker.');
         self.skipWaiting();
     }
 });
 
-// Automatically notify clients about the new version and reload
+// Notify clients of a new service worker
 self.addEventListener('controllerchange', () => {
-    // This triggers when the new service worker takes control
-    console.log('New service worker is controlling the page. Reloading...');
+    console.log('Controller has changed. Reloading the page...');
+    // This will force the page to reload when a new SW takes over
     window.location.reload();
-});
-
-// Handle push notifications
-self.addEventListener('push', event => {
-    const data = event.data ? event.data.json() : {};
-    const { title, message } = data;
-
-    const options = {
-        body: message,
-        icon: '/static/images/logo.png', 
-        badge: '/static/images/logo_fav.png', 
-        vibrate: [200, 100, 200],
-        requireInteraction: true,
-        actions: [
-            { action: 'explore', title: 'View' },
-            { action: 'close', title: 'Close' }
-        ]
-    };
-
-    event.waitUntil(
-        self.registration.showNotification(title, options)
-    );
-});
-
-// Handle notification clicks
-self.addEventListener('notificationclick', event => {
-    console.log('Notification click event:', event);
-
-    event.notification.close();
-
-    if (event.action === 'explore') {
-        event.waitUntil(
-            clients.matchAll({ type: 'window' }).then(clientList => {
-                const client = clientList.find(c => c.url === 'https://tremor-track-innovibe.netlify.app/' && 'focus' in c);
-                
-                if (client) {
-                    console.log('Focusing on existing PWA window');
-                    return client.focus();
-                } else {
-                    console.log('Opening new PWA window');
-                    return clients.open('https://tremor-track-innovibe.netlify.app/');
-                }
-            })
-        );
-    }
 });
