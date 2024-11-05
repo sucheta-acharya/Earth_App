@@ -171,16 +171,21 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Register service worker
     if ('serviceWorker' in navigator) {
-        serviceWorkerRegistration().catch(error => {
-            console.error('Service Worker registration failed:', error);
+        navigator.serviceWorker.register('/service-worker.js').then(registration => {
+            registration.onupdatefound = () => {
+                const newWorker = registration.installing;
+                newWorker.onstatechange = () => {
+                    if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                        // New content is available; notify user or force update
+                        if (confirm("New version available. Refresh to update?")) {
+                            newWorker.postMessage({ action: 'skipWaiting' });
+                        }
+                    }
+                };
+            };
         });
-    
-        // Handle service worker controlling the page
-        navigator.serviceWorker.oncontrollerchange = () => {
-            console.log('Service worker is now controlling the page.');
-            window.location.reload();  // Reload the page to ensure the new service worker takes control
-        };
     }
+    
 
     // Function to request location permission
     function requestLocationPermission() {
@@ -384,8 +389,8 @@ document.addEventListener("DOMContentLoaded", function() {
         })
     }
 
-    setInterval(() => {
-        serviceWorkerRegistration();
-    }, 5000);
+    // setInterval(() => {
+    //     serviceWorkerRegistration();
+    // }, 5000);
     
 });

@@ -16,7 +16,7 @@ self.addEventListener('install', event => {
             return cache.addAll(urlsToCache);
         })
     );
-    // Force the waiting service worker to become active
+    // Force the waiting service worker to become active immediately
     self.skipWaiting();
 });
 
@@ -25,14 +25,19 @@ self.addEventListener('fetch', event => {
     console.log('Fetching:', event.request.url);
     event.respondWith(
         caches.match(event.request).then(response => {
-            return response || fetch(event.request);
+            return response || fetch(event.request).then(fetchResponse => {
+                return caches.open(CACHE_NAME).then(cache => {
+                    cache.put(event.request, fetchResponse.clone());
+                    return fetchResponse;
+                });
+            });
         }).catch(error => {
             console.error('Error fetching resource:', error);
         })
     );
 });
 
-// Update the service worker and delete old caches
+// Activate the new service worker, delete old caches and notify clients
 self.addEventListener('activate', event => {
     console.log('Activating new service worker...');
     const cacheWhitelist = [CACHE_NAME];
@@ -40,18 +45,32 @@ self.addEventListener('activate', event => {
         caches.keys().then(cacheNames => {
             return Promise.all(
                 cacheNames.map(cacheName => {
-                    if (cacheWhitelist.indexOf(cacheName) === -1) {
+                    if (!cacheWhitelist.includes(cacheName)) {
                         console.log('Deleting old cache:', cacheName);
                         return caches.delete(cacheName);
                     }
                 })
             );
         }).then(() => {
-            console.log('Service Worker activated, claiming clients.');
             // Take control of any open clients immediately
+            console.log('Service Worker activated, claiming clients.');
             return self.clients.claim();  // This is crucial
         })
     );
+});
+
+// Listen for messages from the client to prompt an update
+self.addEventListener('message', event => {
+    if (event.data && event.data.action === 'skipWaiting') {
+        self.skipWaiting();
+    }
+});
+
+// Automatically notify clients about the new version and reload
+self.addEventListener('controllerchange', () => {
+    // This triggers when the new service worker takes control
+    console.log('New service worker is controlling the page. Reloading...');
+    window.location.reload();
 });
 
 // Handle push notifications
@@ -92,7 +111,7 @@ self.addEventListener('notificationclick', event => {
                     return client.focus();
                 } else {
                     console.log('Opening new PWA window');
-                    return clients.openWindow('https://tremor-track-innovibe.netlify.app/');
+                    return clients.open('https://tremor-track-innovibe.netlify.app/');
                 }
             })
         );
