@@ -305,6 +305,16 @@ animation: flickering 2s linear infinite;
     
 }
 
+#settingsMain{
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    font-family: 'Source Sans Pro', sans-serif;
+    z-index: 6;
+    transition: all 0.5s ease-in-out;
+}
+
 /* The switch - the box around the slider */
 .switch {
 font-size: 17px;
