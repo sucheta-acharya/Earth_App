@@ -17,7 +17,7 @@
     --cyclone-img: url("/static/images/cyclone-light.png");
 
     --settings-icon: url("/static/images/settings-light.png");
-    --safety-icon: url("/static/images/safety-light.png");
+    --precautions-icon: url("/static/images/precautions-light.png");
     --help-icon: url("/static/images/help-light.png");
     --share-icon: url("/static/images/share-light.png");
     --rate-us-icon: url("/static/images/rate-us-light.png");
@@ -43,7 +43,7 @@
     --cyclone-img: url("/static/images/cyclone-dark.png");
 
     --settings-icon: url("/static/images/settings-dark.png");
-    --safety-icon: url("/static/images/safety-dark.png");
+    --precautions-icon: url("/static/images/precautions-dark.png");
     --help-icon: url("/static/images/help-dark.png");
     --share-icon: url("/static/images/share-dark.png");
     --rate-us-icon: url("/static/images/rate-us-dark.png");
@@ -359,8 +359,8 @@ animation: flickering 2s linear infinite;
     height: 40px;
 }
 
-#safetyButtonIcon{
-    background-image: var(--safety-icon);
+#precautionsButtonIcon{
+    background-image: var(--precautions-icon);
     background-size: contain;
     width: 40px;
     height: 40px;
