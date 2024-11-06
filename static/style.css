@@ -15,6 +15,13 @@
     --home-img: url("/static/images/home-light.png");
     --news-img: url("/static/images/news-light.png");
     --cyclone-img: url("/static/images/cyclone-light.png");
+
+    --settings-icon: url("/static/images/settings-light.png");
+    --safety-icon: url("/static/images/safety-light.png");
+    --help-icon: url("/static/images/help-light.png");
+    --share-icon: url("/static/images/share-light.png");
+    --rate-us-icon: url("/static/images/rate-us-light.png");
+    --about-us-icon: url("/static/images/about-us-light.png");
   }
   
   /* Dark theme variables */
@@ -34,6 +41,13 @@
     --home-img: url("/static/images/home-dark.png");
     --news-img: url("/static/images/news-dark.png");
     --cyclone-img: url("/static/images/cyclone-dark.png");
+
+    --settings-icon: url("/static/images/settings-dark.png");
+    --safety-icon: url("/static/images/safety-dark.png");
+    --help-icon: url("/static/images/help-dark.png");
+    --share-icon: url("/static/images/share-dark.png");
+    --rate-us-icon: url("/static/images/rate-us-dark.png");
+    --about-us-icon: url("/static/images/about-us-dark.png");
   }
 
 body{
@@ -305,7 +319,7 @@ animation: flickering 2s linear infinite;
     
 }
 
-#settingsMain{
+#actionArea,#settingsMain{
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -314,6 +328,66 @@ animation: flickering 2s linear infinite;
     z-index: 6;
     transition: all 0.5s ease-in-out;
 }
+
+.actionAreaButtons{
+    width:100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    font-family: 'Source Sans Pro', sans-serif;
+    transition: all 0.5s ease-in-out;
+    border:none;
+    cursor: pointer;
+    font-size: 17px;
+    background-color: transparent;
+    color: var(--text-color);
+    font-family: sans-serif;
+    letter-spacing: 1px;
+    font-weight: 500;
+}
+
+.actionAreaButtons:hover{
+    color: var(--primary-accent);
+}
+
+#settingsButtonIcon{
+    background-image: var(--settings-icon);
+    background-size: contain;
+    width: 40px;
+    height: 40px;
+}
+
+#safetyButtonIcon{
+    background-image: var(--safety-icon);
+    background-size: contain;
+    width: 40px;
+    height: 40px;
+}
+
+#helpButtonIcon{
+    background-image: var(--help-icon);
+    background-size: contain;
+    width: 40px;
+    height: 40px;
+}
+
+#shareButtonIcon{
+    background-image: var(--share-icon);
+    background-size: contain;
+    width: 40px;
+    height: 40px;
+}
+
+#aboutButtonIcon{
+    background-image: var(--about-us-icon);
+    background-size: contain;
+    width: 40px;
+    height: 40px;
+}
+
+
 
 /* The switch - the box around the slider */
 .switch {

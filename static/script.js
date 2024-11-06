@@ -10,6 +10,9 @@ document.addEventListener("DOMContentLoaded", function() {
     const cycloneMain = document.getElementById("cycloneMain");
 
     const profilephoto = document.getElementById("profileName");
+    const actionArea = document.getElementById("actionArea");
+
+    const settingsButton = document.getElementById("settingsButton");
     const settingsMain = document.getElementById("settingsMain");
 
     const radioButtons = document.querySelectorAll('input[name="radio"]');
@@ -26,6 +29,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     homeMain.style.display = 'none';
                     newsMain.style.display = 'none';
                     cycloneMain.style.display = 'none';
+                    actionArea.style.display = "none";
                     settingsMain.style.display = "none";
                 } else if (label === 'camera') {
                     mapMain.style.display = 'none';
@@ -33,6 +37,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     homeMain.style.display = 'none';
                     newsMain.style.display = 'none';
                     cycloneMain.style.display = 'none';
+                    actionArea.style.display = "none";
                     settingsMain.style.display = "none";
                 } else if (label === 'home') {
                     mapMain.style.display = 'none';
@@ -40,6 +45,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     homeMain.style.display = 'flex';
                     newsMain.style.display = 'none';
                     cycloneMain.style.display = 'none';
+                    actionArea.style.display = "none";
                     settingsMain.style.display = "none";
                 } else if (label === 'news') {
                     mapMain.style.display = 'none';
@@ -47,6 +53,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     homeMain.style.display = 'none';
                     newsMain.style.display = 'flex';
                     cycloneMain.style.display = 'none';
+                    actionArea.style.display = "none";
                     settingsMain.style.display = "none";
                 } else if (label === 'cyclone') {
                     mapMain.style.display = 'none';
@@ -54,6 +61,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     homeMain.style.display = 'none';
                     newsMain.style.display = 'none';
                     cycloneMain.style.display = 'flex';
+                    actionArea.style.display = "none";
                     settingsMain.style.display = "none";
                 }
             }
@@ -61,12 +69,23 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     profilephoto.addEventListener("click", () => {
-        settingsMain.style.display = "flex";
+        actionArea.style.display = "flex";
         mapMain.style.display = "none";
         cameraMain.style.display = "none";
         homeMain.style.display = "none";
         newsMain.style.display = "none";
         cycloneMain.style.display = "none";
+        settingsMain.style.display = "none";
+    });
+
+    settingsButton.addEventListener("click", () => {
+        actionArea.style.display = "none";
+        mapMain.style.display = "none";
+        cameraMain.style.display = "none";
+        homeMain.style.display = "none";
+        newsMain.style.display = "none";
+        cycloneMain.style.display = "none";
+        settingsMain.style.display = "flex";
     });
 
     // Buttons for taking and uploading pictures

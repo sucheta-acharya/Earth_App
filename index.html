@@ -25,6 +25,7 @@
 
     <main id="mapMain" class="hidden">
         <h1>Map</h1>
+        <img style="width: 100%; height: 100%; object-fit: contain; " class="underConstruction" src="/static/images/underconstruction.png" alt="underConstruction">
     </main>
 
     <main id="cameraMain" class="hidden">
@@ -67,20 +68,15 @@
 
     <main id="newsMain" class="hidden">
         <h1>News</h1>
+        <img style="width: 100%; height: 100%; object-fit: contain; " class="underConstruction" src="/static/images/underconstruction.png" alt="underConstruction">
     </main>
 
     <main id="cycloneMain" class="hidden">
         <h1>Cyclone</h1>
-        <div>
-            <h3>Theme Mode: </h3>
-            <label class="switch">
-                <input id="theme-toggle" type="checkbox" checked>
-                <span class="slider"></span>
-            </label>
-        </div>
+        <img style="width: 100%; height: 100%; object-fit: contain; " class="underConstruction" src="/static/images/underconstruction.png" alt="underConstruction">
     </main>
 
-    <main id="settingsMain" class="hidden">
+    <main id="actionArea" class="hidden">
         <div id="profileArea" style="padding:10px;width: 100%; border-bottom: 1px solid var(--text-color); text-align: center; justify-content: space-between; align-items: center; flex-direction: row; display: flex; gap: 10px;">
             <img id="profileImage" src="/static/images/profilepic.jpg" alt="profileImage">
             <h1 id="profileNameText" style="font-weight: 500;font-size: 16px;">Sucheta Acharya</h1>
@@ -88,9 +84,48 @@
                 <img id="profileEditButtonIcon" src="/static/images/edit.png" alt="profileEditButtonIcon" style="width:20px;height:20px;">
             </button>
         </div>
-        <button id="settingsButton">Settings</button>
+        <button id="settingsButton" class="actionAreaButtons">
+            <img id="settingsButtonIcon" src="" alt="settingsButtonIcon">
+            Settings
+        </button>
+
+        <button id="safetyButton" class="actionAreaButtons">
+            <img id="safetyButtonIcon" src="" alt="safetyButtonIcon">
+            Safety
+        </button>
+
+        <button id="helpButton" class="actionAreaButtons">
+            <img id="helpButtonIcon" src="" alt="helpButtonIcon">
+            Help
+        </button>
+
+        <button id="shareButton" class="actionAreaButtons">
+            <img id="shareButtonIcon" src="" alt="shareButtonIcon">
+            Share
+        </button>
+
+        <button id="rateUsButton" class="actionAreaButtons">
+            <img id="rateUsButtonIcon" src="" alt="rateUsButtonIcon">
+            Rate us
+        </button>
+
+        <button id="aboutUsButton" class="actionAreaButtons">
+            <img id="aboutUsButtonIcon" src="" alt="aboutUsButtonIcon">
+            About us
+        </button>
 
     </main>
+
+    <div id="settingsMain" class="hidden">
+        <h1>Settings</h1>
+        <div>
+            <h3>Theme Mode: </h3>
+            <label class="switch">
+                <input id="theme-toggle" type="checkbox" checked>
+                <span class="slider"></span>
+            </label>
+        </div>
+    </div>
 
     <footer>
         <div id="navPanel">
