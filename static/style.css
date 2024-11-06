@@ -303,7 +303,6 @@ animation: flickering 2s linear infinite;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin-top: 40px;
     gap: 20px;
     font-family: 'Source Sans Pro', sans-serif;
     z-index: 5;
@@ -334,7 +333,7 @@ animation: flickering 2s linear infinite;
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-between;
+    justify-content: left;
     gap: 20px;
     font-family: 'Source Sans Pro', sans-serif;
     transition: all 0.5s ease-in-out;
@@ -346,52 +345,37 @@ animation: flickering 2s linear infinite;
     font-family: sans-serif;
     letter-spacing: 1px;
     font-weight: 500;
+    padding-left: 10px;
 }
 
-.actionAreaButtons:hover{
-    color: var(--primary-accent);
+.actionAreaButtonsIcon{
+    background-size: contain;
+    width: 30px;
+    height: 30px;
 }
 
 #settingsButtonIcon{
     background-image: var(--settings-icon);
-    background-size: contain;
-    width: 40px;
-    height: 40px;
 }
 
 #precautionsButtonIcon{
     background-image: var(--precautions-icon);
-    background-size: contain;
-    width: 40px;
-    height: 40px;
 }
 
 #helpButtonIcon{
     background-image: var(--help-icon);
-    background-size: contain;
-    width: 40px;
-    height: 40px;
 }
 
 #shareButtonIcon{
     background-image: var(--share-icon);
-    background-size: contain;
-    width: 40px;
-    height: 40px;
 }
 
 #rateUsButtonIcon{
     background-image: var(--rate-us-icon);
-    background-size: contain;
-    width: 40px;
-    height: 40px;
 }
 
-#aboutButtonIcon{
+#aboutUsButtonIcon{
     background-image: var(--about-us-icon);
-    background-size: contain;
-    width: 40px;
-    height: 40px;
 }
 
 
