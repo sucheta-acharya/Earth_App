@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
 
-    const serverUrl = "https://tvt3wnp4-5080.inc1.devtunnels.ms/";
+    const serverUrl = "https://tvt3wnp4-5080.inc1.devtunnels.ms";
     const GeoApiKey = 'bda91ddaeb1f46e69e4a39bcc3523985'; // Replace with your OpenCage API key
 
     const mapMain = document.getElementById("mapMain");
