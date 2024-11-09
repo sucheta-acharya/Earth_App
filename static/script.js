@@ -95,7 +95,6 @@ document.addEventListener("DOMContentLoaded", function() {
         // Find and log the element that has display set to 'flex'
         const flexElement = elements.find(el => el.style.display === "flex");
         if (flexElement) {
-            console.log("Element with display set to 'flex':", flexElement.id); // Logs the ID of the element
             if (flexElement.id === "settingsMain") {
                 for (let i = 0; i < elements.length; i++) {
                     elements[i].style.display = "none";
@@ -109,18 +108,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 homeMain.style.display = "flex";
             }
 
-        } else {
-            console.log("No element has display set to 'flex'.");
         }
-    
-        // Set actionArea to 'none' and mapMain to 'flex' (default back action)
-        actionArea.style.display = "none";
-        mapMain.style.display = "flex";
-        cameraMain.style.display = "none";
-        homeMain.style.display = "none";
-        newsMain.style.display = "none";
-        cycloneMain.style.display = "none";
-        settingsMain.style.display = "none";
     }
 
     const actionAreaBackButton = document.getElementById("actionAreaBackButton");
