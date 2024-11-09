@@ -1,4 +1,4 @@
-const CACHE_NAME = 'TremorTrack-cache-v1.0.10';
+const CACHE_NAME = 'TremorTrack-cache-v1.0.11';
 const urlsToCache = [
     '/',
     '/static/style.css',

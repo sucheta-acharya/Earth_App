@@ -92,55 +92,76 @@ document.addEventListener("DOMContentLoaded", function() {
         history.pushState({ page: 1 }, null, "");
     });
 
+    const actionAreaBackButton = document.getElementById("actionAreaBackButton");
+    const settingsAreaBackButton = document.getElementById("settingsAreaBackButton");
+    
     function handleBackNavigation() {
         // Array of all elements to check
-        const elements = [mapMain, cameraMain, homeMain, newsMain, cycloneMain,actionArea, settingsMain];
+        const elements = [mapMain, cameraMain, homeMain, newsMain, cycloneMain, actionArea, settingsMain];
         
-        // Find and log the element that has display set to 'flex'
+        // Find the element currently displayed as 'flex'
         const flexElement = elements.find(el => el.style.display === "flex");
+    
         if (flexElement) {
+            // Handle back navigation depending on which element is currently displayed
             if (flexElement.id === "settingsMain") {
-                for (let i = 0; i < elements.length; i++) {
-                    elements[i].style.display = "none";
-                }
+                // If in settings, navigate back to actionArea
+                elements.forEach(el => el.style.display = "none");
                 actionArea.style.display = "flex";
-            }
-            else if (flexElement.id === "actionArea") {
-                for (let i = 0; i < elements.length; i++) {
-                    elements[i].style.display = "none";
-                }
+            } else if (flexElement.id === "actionArea") {
+                // If in actionArea, navigate back to homeMain
+                elements.forEach(el => el.style.display = "none");
                 homeMain.style.display = "flex";
             }
-
         }
     }
-
-    const actionAreaBackButton = document.getElementById("actionAreaBackButton");
-    const settingsAreaBackButton= document.getElementById("settingsAreaBackButton");
     
-    // Add event listener to the custom back button
+    // Event listener for the action area back button
     actionAreaBackButton.addEventListener("click", () => {
         // Push a new history state to handle the back button press
-        history.pushState(null, null, location.href);
-        handleBackNavigation();
-    });
-
-    settingsAreaBackButton.addEventListener("click", () => {
-        // Push a new history state to handle the back button press
-        history.pushState(null, null, location.href);
+        history.pushState({ page: "actionArea" }, null, "");
         handleBackNavigation();
     });
     
-    // Listen for the popstate event to handle the back button on mobile
+    // Event listener for the settings area back button
+    settingsAreaBackButton.addEventListener("click", () => {
+        // Push a new history state to handle the back button press
+        history.pushState({ page: "settingsMain" }, null, "");
+        handleBackNavigation();
+    });
+    
+    // Add an initial history state on page load
+    window.addEventListener("load", () => {
+        history.replaceState({ page: "homeMain" }, null, "");
+    });
+    
+    // Listen for the popstate event to handle the phone's back button
     window.addEventListener("popstate", (event) => {
-        if (event.state && event.state.page === 1) {
-            // If the back button is pressed from the secondary state, handle navigation
-            handleBackNavigation();
+        if (event.state) {
+            // Handle different pages based on history state
+            switch (event.state.page) {
+                case "settingsMain":
+                    // When back from settingsMain, show actionArea
+                    elements.forEach(el => el.style.display = "none");
+                    actionArea.style.display = "flex";
+                    break;
+                case "actionArea":
+                    // When back from actionArea, show homeMain
+                    elements.forEach(el => el.style.display = "none");
+                    homeMain.style.display = "flex";
+                    break;
+                default:
+                    // If no specific state, default to home view
+                    elements.forEach(el => el.style.display = "none");
+                    homeMain.style.display = "flex";
+                    break;
+            }
         } else {
-            // Re-add a state if the user navigates further back to avoid app closing
-            history.pushState({ page: 1 }, null, "");
+            // Re-add a state if navigating further back to avoid app closing
+            history.pushState({ page: "homeMain" }, null, "");
         }
     });
+    
 
     // Buttons for taking and uploading pictures
     document.getElementById("takePictureButton").addEventListener("click", openCamera);
