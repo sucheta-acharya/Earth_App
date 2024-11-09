@@ -77,7 +77,13 @@
     </main>
 
     <main id="actionArea" class="hidden">
-        <div id="profileArea" style="padding:10px;width: 100%; border-bottom: 1px solid var(--text-color); text-align: center; justify-content: space-between; align-items: center; flex-direction: row; display: flex; gap: 10px;">
+        <div id="actionAreaHeader" style="width: 100%; display: flex; justify-content: left; align-items: center; border-bottom: 1px solid var(--text-color);margin:0px;">
+            <button class="backButton" id="actionAreaBackButton">
+                <span class="backButtonIcon" aria-label="backButtonIcon"></span>
+                <span class="backButtonLable">Action Area</span>
+            </button>
+        </div>
+        <div id="profileArea" style="padding:10px;width: 100%; border-bottom: 1px solid var(--text-color); text-align: center; justify-content: space-between; align-items: center; flex-direction: row; display: flex; gap: 10px; margin:0px; padding-top:0px;">
             <img id="profileImage" src="/static/images/profilepic.jpg" alt="profileImage">
             <h1 id="profileNameText" style="font-weight: 500;font-size: 16px;">Sucheta Acharya</h1>
             <button id="profileEditButton" style="width:30px;height:30px; border:none;border-radius: 50%; justify-content: center; align-items: center; display: flex; background-color: transparent;">
@@ -118,7 +124,12 @@
     </main>
 
     <div id="settingsMain" class="hidden">
-        <h1>Settings</h1>
+        <div id="actionAreaHeader" style="width: 100%; display: flex; justify-content: left; align-items: center; border-bottom: 1px solid var(--text-color);margin:0px;">
+            <button class="backButton" id="settingsAreaBackButton">
+                <span class="backButtonIcon" aria-label="backButtonIcon"></span>
+                <span class="backButtonLable">Settings</span>
+            </button>
+        </div>
         <div>
             <h3>Theme Mode: </h3>
             <label class="switch">

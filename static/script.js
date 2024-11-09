@@ -88,6 +88,62 @@ document.addEventListener("DOMContentLoaded", function() {
         settingsMain.style.display = "flex";
     });
 
+    function handleBackNavigation() {
+        // Array of all elements to check
+        const elements = [mapMain, cameraMain, homeMain, newsMain, cycloneMain,actionArea, settingsMain];
+        
+        // Find and log the element that has display set to 'flex'
+        const flexElement = elements.find(el => el.style.display === "flex");
+        if (flexElement) {
+            console.log("Element with display set to 'flex':", flexElement.id); // Logs the ID of the element
+            if (flexElement.id === "settingsMain") {
+                for (let i = 0; i < elements.length; i++) {
+                    elements[i].style.display = "none";
+                }
+                actionArea.style.display = "flex";
+            }
+            else if (flexElement.id === "actionArea") {
+                for (let i = 0; i < elements.length; i++) {
+                    elements[i].style.display = "none";
+                }
+                homeMain.style.display = "flex";
+            }
+
+        } else {
+            console.log("No element has display set to 'flex'.");
+        }
+    
+        // Set actionArea to 'none' and mapMain to 'flex' (default back action)
+        actionArea.style.display = "none";
+        mapMain.style.display = "flex";
+        cameraMain.style.display = "none";
+        homeMain.style.display = "none";
+        newsMain.style.display = "none";
+        cycloneMain.style.display = "none";
+        settingsMain.style.display = "none";
+    }
+
+    const actionAreaBackButton = document.getElementById("actionAreaBackButton");
+    const settingsAreaBackButton= document.getElementById("settingsAreaBackButton");
+    
+    // Add event listener to the custom back button
+    actionAreaBackButton.addEventListener("click", () => {
+        // Push a new history state to handle the back button press
+        history.pushState(null, null, location.href);
+        handleBackNavigation();
+    });
+
+    settingsAreaBackButton.addEventListener("click", () => {
+        // Push a new history state to handle the back button press
+        history.pushState(null, null, location.href);
+        handleBackNavigation();
+    });
+    
+    // Listen for the popstate event to handle the back button on mobile
+    window.addEventListener("popstate", (event) => {
+        handleBackNavigation();
+    });
+
     // Buttons for taking and uploading pictures
     document.getElementById("takePictureButton").addEventListener("click", openCamera);
     document.getElementById("uploadPictureButton").addEventListener("click", uploadPicture);

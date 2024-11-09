@@ -22,6 +22,8 @@
     --share-icon: url("/static/images/share-light.png");
     --rate-us-icon: url("/static/images/rate-us-light.png");
     --about-us-icon: url("/static/images/about-us-light.png");
+
+    --back-icon:url("/static/images/back-light.png");
   }
   
   /* Dark theme variables */
@@ -48,6 +50,8 @@
     --share-icon: url("/static/images/share-dark.png");
     --rate-us-icon: url("/static/images/rate-us-dark.png");
     --about-us-icon: url("/static/images/about-us-dark.png");
+
+    --back-icon:url("/static/images/back-dark.png");
   }
 
 body{
@@ -381,6 +385,31 @@ animation: flickering 2s linear infinite;
     background-image: var(--about-us-icon);
 }
 
+.backButton{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-family: 'Source Sans Pro', sans-serif;
+    transition: all 0.5s ease-in-out;
+    border:none;
+    cursor: pointer;
+    font-size: 18px;
+    background-color: transparent;
+    color: var(--text-color);
+    font-family: sans-serif;
+    letter-spacing: 1px;
+    font-weight: 500;
+    padding-left: 10px;
+}
+
+.backButtonIcon{
+    background-image: var(--back-icon);
+    background-size: contain;
+    width: 35px;
+    height: 35px;
+}
 
 
 /* The switch - the box around the slider */
