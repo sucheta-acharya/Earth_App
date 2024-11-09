@@ -88,6 +88,10 @@ document.addEventListener("DOMContentLoaded", function() {
         settingsMain.style.display = "flex";
     });
 
+    window.addEventListener("load", () => {
+        history.pushState({ page: 1 }, null, "");
+    });
+
     function handleBackNavigation() {
         // Array of all elements to check
         const elements = [mapMain, cameraMain, homeMain, newsMain, cycloneMain,actionArea, settingsMain];
@@ -129,7 +133,13 @@ document.addEventListener("DOMContentLoaded", function() {
     
     // Listen for the popstate event to handle the back button on mobile
     window.addEventListener("popstate", (event) => {
-        handleBackNavigation();
+        if (event.state && event.state.page === 1) {
+            // If the back button is pressed from the secondary state, handle navigation
+            handleBackNavigation();
+        } else {
+            // Re-add a state if the user navigates further back to avoid app closing
+            history.pushState({ page: 1 }, null, "");
+        }
     });
 
     // Buttons for taking and uploading pictures
