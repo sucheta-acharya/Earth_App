@@ -119,24 +119,41 @@ document.addEventListener("DOMContentLoaded", () => {
         input.click();
     };
 
-    const previewAndSendImage = async (file) => {
-        const confirmText = document.createElement("p");
-        confirmText.textContent = "Uploading...";
-        elements.cameraMain.appendChild(confirmText);
-
+    async function previewAndSendImage(file) {
+        const statusMessage = document.createElement("p");
+        statusMessage.textContent = "Uploading...";
+        document.getElementById("cameraMain").appendChild(statusMessage);
+    
         const formData = new FormData();
         formData.append("image", file);
-
+    
+        // Timeout wrapper function
+        const fetchWithTimeout = (url, options, timeout = 5000) => {
+            return new Promise((resolve, reject) => {
+                const timer = setTimeout(() => reject(new Error("Request timed out")), timeout);
+                fetch(url, options).then(
+                    response => {
+                        clearTimeout(timer);
+                        resolve(response);
+                    },
+                    err => {
+                        clearTimeout(timer);
+                        reject(err);
+                    }
+                );
+            });
+        };
+    
         try {
-            const response = await fetch(`${serverUrl}/upload_image`, { method: "POST", body: formData });
-            confirmText.textContent = response.ok ? "Image uploaded successfully!" : "Image upload failed!";
-            confirmText.style.color = response.ok ? "green" : "red";
-        } catch {
-            confirmText.textContent = "Server error!";
-            confirmText.style.color = "red";
+            const response = await fetchWithTimeout(`${serverUrl}/upload_image`, { method: "POST", body: formData });
+            statusMessage.textContent = response.ok ? "Image uploaded successfully!" : "Image upload failed!";
+            statusMessage.style.color = response.ok ? "green" : "red";
+        } catch (error) {
+            statusMessage.textContent = error.message === "Request timed out" ? "Upload timed out!" : "Server error!";
+            statusMessage.style.color = "red";
         }
-        setTimeout(() => confirmText.remove(), 4000);
-    };
+        setTimeout(() => statusMessage.remove(), 4000);
+    }
 
     // Socket.IO notifications
     const socket = io(serverUrl, { transports: ['websocket'], reconnectionAttempts: 5, reconnectionDelay: 1000, timeout: 2000 });
