@@ -1,166 +1,168 @@
-document.addEventListener("DOMContentLoaded", function() {
-
+document.addEventListener("DOMContentLoaded", () => {
     const serverUrl = "https://tvt3wnp4-5080.inc1.devtunnels.ms";
     const GeoApiKey = 'bda91ddaeb1f46e69e4a39bcc3523985';
-
-    const mapMain = document.getElementById("mapMain");
-    const cameraMain = document.getElementById("cameraMain");
-    const homeMain = document.getElementById("homeMain");
-    const newsMain = document.getElementById("newsMain");
-    const cycloneMain = document.getElementById("cycloneMain");
-
-    const profilephoto = document.getElementById("profileName");
-    const actionArea = document.getElementById("actionArea");
-    const settingsButton = document.getElementById("settingsButton");
-
-    const settingsMain= document.getElementById("settingsMain");
-
-    const elements = { 
-        mapMain,
-        cameraMain,
-        homeMain,
-        newsMain,
-        cycloneMain,
-        actionArea,
-        settingsMain
+    const elements = {
+        mapMain: document.getElementById("mapMain"),
+        cameraMain: document.getElementById("cameraMain"),
+        homeMain: document.getElementById("homeMain"),
+        newsMain: document.getElementById("newsMain"),
+        cycloneMain: document.getElementById("cycloneMain"),
+        actionArea: document.getElementById("actionArea"),
+        settingsMain: document.getElementById("settingsMain")
     };
+    const profilePhoto = document.getElementById("profileName");
+    const settingsButton = document.getElementById("settingsButton");
+    const themeToggleButton = document.getElementById("theme-toggle");
+    const radioButtons = document.querySelectorAll('input[name="radio"]');
+    const currentAddress = document.getElementById("currentAddress");
 
-    // Utility function to display only the selected view
-    function setDisplay(view) {
+    // Utility to show only the selected view
+    const setDisplay = (view) => {
         Object.values(elements).forEach(el => el.style.display = "none");
         view.style.display = "flex";
-    }
-
-    const viewStates = {
-        "mapMain": elements.mapMain,
-        "cameraMain": elements.cameraMain,
-        "homeMain": elements.homeMain,
-        "newsMain": elements.newsMain,
-        "cycloneMain": elements.cycloneMain,
-        "actionArea": elements.actionArea,
-        "settingsMain": elements.settingsMain,
     };
 
-    const radioButtons = document.querySelectorAll('input[name="radio"]');
+    // Set initial theme
+    const savedTheme = localStorage.getItem("theme") || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    const setTheme = (theme) => {
+        document.documentElement.setAttribute("data-theme", theme);
+        localStorage.setItem("theme", theme);
+    };
+    setTheme(savedTheme);
 
-    radioButtons.forEach((radio) => {
+    // Event listeners for navigation
+    radioButtons.forEach(radio => {
         radio.addEventListener('change', () => {
             if (radio.checked) {
-                const label = radio.nextElementSibling.getAttribute('aria-label');
-                elements.forEach(el => el.style.display = "none");
-
-                if (viewStates[label + "Main"]) {
-                    viewStates[label + "Main"].style.display = 'flex';
-                    history.pushState({ page: label + "Main" }, null, "");
-                }
+                const label = radio.nextElementSibling.getAttribute('aria-label') + "Main";
+                setDisplay(elements[label]);
+                history.pushState({ page: label }, null, "");
             }
         });
     });
 
+    // Settings and profile photo interactions
     settingsButton.addEventListener("click", () => {
-        history.pushState({ page: "settingsMain" }, null, "");
         setDisplay(elements.settingsMain);
+        history.pushState({ page: "settingsMain" }, null, "");
     });
-
-    profilephoto.addEventListener("click", () => {
-        history.pushState({ page: "actionArea" }, null, "");
+    profilePhoto.addEventListener("click", () => {
         setDisplay(elements.actionArea);
+        history.pushState({ page: "actionArea" }, null, "");
     });
 
+    // Back button actions
     document.getElementById("settingsAreaBackButton").addEventListener("click", () => {
-        history.pushState({ page: "actionArea" }, null, "");
         setDisplay(elements.actionArea);
+        history.pushState({ page: "actionArea" }, null, "");
     });
-
     document.getElementById("actionAreaBackButton").addEventListener("click", () => {
+        setDisplay(elements.homeMain);
         history.pushState({ page: "homeMain" }, null, "");
-        setDisplay(elements.homeMain);
     });
 
-    window.addEventListener("load", () => {
-        history.replaceState({ page: "homeMain" }, null, "");
-        setDisplay(elements.homeMain);
+    // Theme toggle button
+    themeToggleButton.addEventListener("click", () => {
+        setTheme(document.documentElement.getAttribute("data-theme") === "light" ? "dark" : "light");
     });
 
-    window.addEventListener("popstate", (event) => {
-        const statePage = event.state ? event.state.page : "homeMain";
-        setDisplay(viewStates[statePage] || elements.homeMain);
-    });
-
-    document.getElementById("takePictureButton").addEventListener("click", openCamera);
-    document.getElementById("uploadPictureButton").addEventListener("click", uploadPicture);
-
-    function openCamera() {
-        const captureInput = document.createElement("input");
-        captureInput.type = "file";
-        captureInput.accept = "image/*";
-        captureInput.capture = "environment";
-
-        captureInput.addEventListener("change", async () => {
-            const file = captureInput.files[0];
-            if (file) previewAndSendImage(file);
+    // Service Worker registration with periodic update check
+    const serviceWorkerRegistration = () => {
+        navigator.serviceWorker.register('/service-worker.js').then(reg => {
+            reg.onupdatefound = () => {
+                const newWorker = reg.installing;
+                newWorker.onstatechange = () => {
+                    if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                        console.log("New version available. Forcing update.");
+                        newWorker.postMessage({ action: 'skipWaiting' });
+                    }
+                };
+            };
         });
-        captureInput.click();
-    }
+        navigator.serviceWorker.addEventListener('controllerchange', () => window.location.reload());
+    };
+    if ('serviceWorker' in navigator) setInterval(serviceWorkerRegistration, 5000);
 
-    function uploadPicture() {
-        const uploadInput = document.createElement("input");
-        uploadInput.type = "file";
-        uploadInput.accept = "image/*";
+    // Location and notification permissions
+    const requestPermissions = async () => {
+        if ('geolocation' in navigator) navigator.geolocation.getCurrentPosition(showPosition, showError);
+        if ('Notification' in window) await Notification.requestPermission();
+        if ('contacts' in navigator) await navigator.contacts.select(['name', 'email'], { multiple: true });
+    };
 
-        uploadInput.addEventListener("change", async () => {
-            const file = uploadInput.files[0];
-            if (file) previewAndSendImage(file);
+    // Geolocation handling
+    const showPosition = (position) => getAddressFromCoordinates(position.coords.latitude, position.coords.longitude);
+    const showError = (error) => currentAddress.textContent = ["Permission denied", "Position unavailable", "Timeout", "Unknown error"][error.code] || "Error";
+
+    // Get address from OpenCage API
+    const getAddressFromCoordinates = (lat, lng) => {
+        fetch(`https://api.opencagedata.com/geocode/v1/json?q=${lat}+${lng}&key=${GeoApiKey}`)
+            .then(response => response.json())
+            .then(data => {
+                currentAddress.textContent = data.results.length > 0 ? data.results[0].formatted : "Unable to retrieve address.";
+            }).catch(() => currentAddress.textContent = "Error fetching address.");
+    };
+
+    // Image handling
+    const handleImageUpload = (capture = false) => {
+        const input = document.createElement("input");
+        input.type = "file";
+        input.accept = "image/*";
+        if (capture) input.capture = "environment";
+        input.addEventListener("change", async () => {
+            const file = input.files[0];
+            if (file) await previewAndSendImage(file);
         });
-        uploadInput.click();
-    }
+        input.click();
+    };
 
-    async function previewAndSendImage(file) {
+    const previewAndSendImage = async (file) => {
         const confirmText = document.createElement("p");
         confirmText.textContent = "Uploading...";
-        document.getElementById("cameraMain").appendChild(confirmText);
+        elements.cameraMain.appendChild(confirmText);
 
         const formData = new FormData();
         formData.append("image", file);
 
         try {
-            const response = await fetch(serverUrl + "/upload_image", { method: "POST", body: formData });
+            const response = await fetch(`${serverUrl}/upload_image`, { method: "POST", body: formData });
             confirmText.textContent = response.ok ? "Image uploaded successfully!" : "Image upload failed!";
             confirmText.style.color = response.ok ? "green" : "red";
-        } catch (error) {
+        } catch {
             confirmText.textContent = "Server error!";
             confirmText.style.color = "red";
         }
         setTimeout(() => confirmText.remove(), 4000);
-    }
+    };
 
-    const themeToggleButton = document.getElementById("theme-toggle");
+    // Socket.IO notifications
+    const socket = io(serverUrl, { transports: ['websocket'], reconnectionAttempts: 5, reconnectionDelay: 1000, timeout: 2000 });
+    socket.on('new_notification', ({ title, message }) => showNotification(title, message));
 
-    function setTheme(theme) {
-        document.documentElement.setAttribute("data-theme", theme);
-        localStorage.setItem("theme", theme);
-    }
+    const showNotification = async (title, message) => {
+        const registration = await navigator.serviceWorker.ready;
+        if (registration.showNotification) {
+            await registration.showNotification(title, {
+                body: message,
+                icon: '/static/images/logo.png',
+                badge: '/static/images/logo_fav.png',
+                vibrate: [200, 100, 200],
+                requireInteraction: true,
+                actions: [{ action: 'explore', title: 'View' }, { action: 'close', title: 'Close' }]
+            });
+        } else {
+            new Notification(title, { body: message, icon: '/static/images/logo.png' });
+        }
+    };
 
-    const savedTheme = localStorage.getItem("theme");
-    const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    setTheme(savedTheme || (systemPrefersDark ? "dark" : "light"));
-
-    themeToggleButton.addEventListener("click", () => {
-        setTheme(document.documentElement.getAttribute("data-theme") === "light" ? "dark" : "light");
+    // Initialize and request permissions on page load
+    window.addEventListener("load", () => {
+        history.replaceState({ page: "homeMain" }, null, "");
+        setDisplay(elements.homeMain);
+        requestPermissions();
     });
 
-    function serviceWorkerRegistration() {
-        navigator.serviceWorker.register('/service-worker.js').then(registration => {
-            registration.addEventListener('updatefound', () => {
-                const newWorker = registration.installing;
-                newWorker.addEventListener('statechange', () => {
-                    if (newWorker.state === 'activated') {
-                        if (navigator.serviceWorker.controller) window.location.reload();
-                    }
-                });
-            });
-        });
-    }
-    setInterval(serviceWorkerRegistration, 5000);
-
+    window.addEventListener("popstate", (event) => {
+        setDisplay(elements[event.state?.page] || elements.homeMain);
+    });
 });
