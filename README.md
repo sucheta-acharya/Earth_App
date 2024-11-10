@@ -1,5 +1,5 @@
 # Earth App 🌍
-================
+-----------------
 
 Earth App is an educational app that provides real-time information about Earth and environmental phenomena, including weather, earthquakes, air quality, and more. The app utilizes various APIs to deliver a comprehensive, interactive experience for users interested in learning about Earth's environmental data.
 
