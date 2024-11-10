@@ -103,6 +103,9 @@ document.addEventListener("DOMContentLoaded", () => {
             }).catch(() => currentAddress.textContent = "Error fetching address.");
     };
 
+    document.getElementById("takePictureButton").addEventListener("click", () => handleImageUpload(true));
+    document.getElementById("uploadPictureButton").addEventListener("click", () => handleImageUpload(false));
+
     // Image handling
     const handleImageUpload = (capture = false) => {
         const input = document.createElement("input");
