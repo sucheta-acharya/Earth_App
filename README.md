@@ -37,13 +37,14 @@ Set Up Environment Variables
 Create a .env file in the root directory and add the following API keys:
 
 
-```OPENWEATHER_API_KEY=your_openweather_api_key
-USGS_API_KEY=your_usgs_api_key
-AIRVISUAL_API_KEY=your_airvisual_api_key```
+``` OPENWEATHER_API_KEY=your_openweather_api_key```
+```USGS_API_KEY=your_usgs_api_key```
+```AIRVISUAL_API_KEY=your_airvisual_api_key ```
+
 Start the Application
 Run the app locally:
 
-```npm start```
+````npm start````
 The app should now be running on http://localhost:3000.
 
 Usage
