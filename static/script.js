@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const serverUrl = "https://tvt3wnp4-5080.inc1.devtunnels.ms";
+    const serverUrl ="https://hl4crsv1-5080.inc1.devtunnels.ms/";
     const GeoApiKey = 'bda91ddaeb1f46e69e4a39bcc3523985';
     const elements = {
         mapMain: document.getElementById("mapMain"),
@@ -92,7 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Geolocation handling
     const showPosition = (position) => getAddressFromCoordinates(position.coords.latitude, position.coords.longitude);
-    const showError = (error) => currentAddress.textContent = ["Permission denied", "Position unavailable", "Timeout", "Unknown error"][error.code] || "Error";
+    
 
     // Get address from OpenCage API
     const getAddressFromCoordinates = (lat, lng) => {
